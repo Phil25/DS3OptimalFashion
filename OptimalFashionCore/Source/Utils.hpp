@@ -13,11 +13,11 @@ namespace optifa
 	inline float CalculateDiminishing(const ArmorPiece& head, const ArmorPiece& chest, const ArmorPiece& hands, const ArmorPiece& legs, const ArmorPiece::Param p) noexcept
 	{
 		const auto a = head.Get(p), b = chest.Get(p), c = hands.Get(p), d = legs.Get(p);
-        if constexpr (Exact)
-        {
-            // simplified (1 - (1 - a/100) * (1 - b/100) * (1 - c/100) * (1 - d/100)) * 100;
-            return (1 - (a - 100) * (b - 100) * (c - 100) * (d - 100) / 1'00'00'00'00) * 100;
-        }
+		if constexpr (Exact)
+		{
+			// simplified (1 - (1 - a/100) * (1 - b/100) * (1 - c/100) * (1 - d/100)) * 100;
+			return (1 - (a - 100) * (b - 100) * (c - 100) * (d - 100) / 1'00'00'00'00) * 100;
+		}
 		else
 		{
 			// stripped of modifiers, for comparison purposes
@@ -26,20 +26,20 @@ namespace optifa
 	}
 
 	constexpr float ToComparableValue(const float val) noexcept
-    {
-        // take an end value, and turn it into value comparable with CalculateDiminishing<false>()
-        return (val / 100 - 1) * 1'00'00'00'00;
-    }
+	{
+		// take an end value, and turn it into value comparable with CalculateDiminishing<false>()
+		return (val / 100 - 1) * 1'00'00'00'00;
+	}
 
-    constexpr bool SuffersFromDiminishingReturns(const ArmorPiece::Param param) noexcept
-    {
-        /*
-            Physical, Strike, Slash, Thrust,
-            Magic, Fire, Lightning, Dark,
-            Bleed, Poison, Frost, Curse,
-            Poise, Weight,
-            Size
-        */
-        return (1 << static_cast<uint32_t>(param)) & 0b0'01'0000'1111'1111;
-    }
+	constexpr bool SuffersFromDiminishingReturns(const ArmorPiece::Param param) noexcept
+	{
+		/*
+			Physical, Strike, Slash, Thrust,
+			Magic, Fire, Lightning, Dark,
+			Bleed, Poison, Frost, Curse,
+			Poise, Weight,
+			Size
+		*/
+		return (1 << static_cast<uint32_t>(param)) & 0b0'01'0000'1111'1111;
+	}
 }
