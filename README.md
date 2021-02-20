@@ -1,4 +1,4 @@
-# Optimal Fashion
+# DS3OptimalFashion
 
 *Most optimal armor for your favorite build looks like poop? Find the next best thing!*
 
@@ -8,7 +8,7 @@ This is basically Dark Souls III armor finder at [soulsplanner.com](soulsplanner
 * Allows to specify a whitelist for items you want to have.
 * Allows to specify a blacklist for items you want to exclude.
 * Allows to specify minimal difference from most optimal armor to find multiple sets.
-* Is optimized a bit better (especially when specifying min limits for multiple params, which prolly nobody uses)
+* Is optimized a bit better (especially when specifying min limits for multiple params, which prolly nobody uses).
 * Is not a website and ofc is still WIP.
 
 ## Features

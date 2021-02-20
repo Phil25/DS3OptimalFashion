@@ -1,5 +1,5 @@
-#include "ArmorFinder.hpp"
-#include "Parser.hpp"
+#include "ArmorFinder.h"
+#include "Parser.h"
 #include <cassert>
 
 constexpr char cr = '\n';

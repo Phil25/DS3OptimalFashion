@@ -1,5 +1,5 @@
 #include <iostream>
-#include <ArmorFinder.hpp>
+#include <ArmorFinder.h>
 
 /// <summary>
 /// Barebones interface for using the library (one you have to compile yourself).
