@@ -5,9 +5,9 @@
 This is basically Dark Souls III armor finder at [soulsplanner.com](soulsplanner.com) with some additional functionality.
 
 ## Differences from soulsplanner.com
-* Allows you to specify a whitelist for items you want to have.
-* Allows you to specify a blacklist for items you want to exclude.
-* Does **not** find armor sets that are very similar (whitelist and blacklist should mostly cover this).
+* Allows to specify a whitelist for items you want to have.
+* Allows to specify a blacklist for items you want to exclude.
+* Allows to specify minimal difference from most optimal armor to find multiple sets.
 * Is optimized a bit better (especially when specifying min limits for multiple params, which prolly nobody uses)
 * Is not a website and ofc is still WIP.
 

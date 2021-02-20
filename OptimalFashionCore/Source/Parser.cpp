@@ -38,7 +38,7 @@ namespace optifa
 			{
 				if (globalWhitelist.count(name)) whitelist.insert(name);
 				if (globalBlacklist.count(name)) blacklist.insert(name);
-				allPieces.emplace_back(name, p);
+				allPieces.emplace_back(std::make_unique<ArmorPiece>(name, p));
 			}
 		}
 		catch (const io::error::can_not_open_file&)
@@ -51,8 +51,8 @@ namespace optifa
 		ArmorPiece::Vector pieces;
 		for (auto& piece : allPieces)
 		{
-			if (blacklist.count(piece.name)) continue;
-			if (!whitelist.empty() && !whitelist.count(piece.name)) continue;
+			if (blacklist.count(piece->name)) continue;
+			if (!whitelist.empty() && !whitelist.count(piece->name)) continue;
 			pieces.emplace_back(std::move(piece));
 		}
 
