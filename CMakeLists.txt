@@ -12,5 +12,6 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 conan_basic_setup(TARGETS)
 
+add_subdirectory(DS3OptimalFashion)
 add_subdirectory(DS3OptimalFashionCore)
 add_subdirectory(DS3OptimalFashionManual)
