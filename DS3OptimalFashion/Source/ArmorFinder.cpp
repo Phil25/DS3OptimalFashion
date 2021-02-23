@@ -1,37 +1,27 @@
 #include "ArmorFinder.h"
 
+#include <ParameterConstraint.h>
+
 ArmorFinder::ArmorFinder(wxWindow* parent) : TitlePanel(parent, wxSize(800, 200), "Armor Finder")
 {
 	auto* sizer = new wxBoxSizer(wxHORIZONTAL);
 
-	auto* options = new GroupPanel(GetContent(), "Options");
-	options->NewEditableParamField<wxSpinCtrlDouble>("Current Load");
-	options->NewEditableParamField<wxSpinCtrlDouble>("Max Load");
-	options->NewEditableParamField<wxSpinCtrlDouble>("Percentage")->SetValue(70.);
-	options->NewEditableParamField<ParameterChoiceList>("Maximize");
-	options->NewEditableParamField<wxSpinCtrlDouble>("Delta");
+	auto* stats = new GroupPanel(GetContent(), "Build Stats");
+	stats->NewEditableParamField<wxSpinCtrlDouble>("Current Load");
+	stats->NewEditableParamField<wxSpinCtrlDouble>("Full Load");
+	stats->NewEditableParamField<wxSpinCtrlDouble>("Percentage")->SetValue(70.);
 
-	auto* constraints = new GridPanel(GetContent(), "Minimal Parameter Constraints");
+	auto* maximization = new GroupPanel(GetContent(), "Parameter to Maximize");
+	maximization->NewEditableParamField<ParameterChoiceList>("Maximize");
+	maximization->NewEditableParamField<wxSpinCtrlDouble>("Max Delta");
 
-	constraints->NewEditableParamField<wxSpinCtrlDouble>(0, "Physical");
-	constraints->NewEditableParamField<wxSpinCtrlDouble>(0, "Strike");
-	constraints->NewEditableParamField<wxSpinCtrlDouble>(0, "Slash");
-	constraints->NewEditableParamField<wxSpinCtrlDouble>(0, "Thrust");
+	auto* constraints = new GroupPanel(GetContent(), "Minimal Parameter Constraints");
+	auto* listPanel = constraints->AddItem<ListPanel<ParameterConstraint>>();
+	listPanel->AddListItem()->SetParameter(12);
 
-	constraints->NewEditableParamField<wxSpinCtrlDouble>(1, "Magic");
-	constraints->NewEditableParamField<wxSpinCtrlDouble>(1, "Fire");
-	constraints->NewEditableParamField<wxSpinCtrlDouble>(1, "Lightning");
-	constraints->NewEditableParamField<wxSpinCtrlDouble>(1, "Dark");
-
-	constraints->NewEditableParamField<wxSpinCtrl>(2, "Bleed");
-	constraints->NewEditableParamField<wxSpinCtrl>(2, "Poison");
-	constraints->NewEditableParamField<wxSpinCtrl>(2, "Frost");
-	constraints->NewEditableParamField<wxSpinCtrl>(2, "Curse");
-
-	constraints->NewEditableParamField<wxSpinCtrlDouble>(3, "Poise");
-
-	sizer->Add(options, 1, wxEXPAND);
-	sizer->Add(constraints, 3, wxEXPAND);
+	sizer->Add(stats, 1, wxEXPAND);
+	sizer->Add(maximization, 1, wxEXPAND);
+	sizer->Add(constraints, 1, wxEXPAND);
 
 	GetContent()->SetSizerAndFit(sizer);
 }

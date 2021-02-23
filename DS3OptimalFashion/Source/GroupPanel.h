@@ -23,6 +23,17 @@ public:
 
 		return paramField;
 	}
+
+	template <typename Item>
+	auto AddItem() -> Item*
+	{
+		auto* item = new Item(GetContent());
+		sizer->Add(item, 0, wxEXPAND | wxLEFT | wxRIGHT, 5);
+
+		GetContent()->SetSizerAndFit(sizer);
+
+		return item;
+	}
 };
 
 class GridPanel final : public TitlePanel
