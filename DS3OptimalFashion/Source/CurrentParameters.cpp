@@ -6,27 +6,27 @@ CurrentParameters::CurrentParameters(wxWindow* parent)
 	auto* sizer = new wxBoxSizer(wxHORIZONTAL);
 
 	auto* absPhysical = new GroupPanel(GetContent(), "Physical Absorption");
-	absPhysical->NewParamField("Physical");
-	absPhysical->NewParamField("Strike");
-	absPhysical->NewParamField("Slash");
-	absPhysical->NewParamField("Thrust");
+	absPhysical->AddItem<ParameterField>("Physical");
+	absPhysical->AddItem<ParameterField>("Strike");
+	absPhysical->AddItem<ParameterField>("Slash");
+	absPhysical->AddItem<ParameterField>("Thrust");
 
 	auto* absElemental = new GroupPanel(GetContent(), "Elemental Absorption");
-	absElemental->NewParamField("Magic");
-	absElemental->NewParamField("Fire");
-	absElemental->NewParamField("Lightning");
-	absElemental->NewParamField("Dark");
+	absElemental->AddItem<ParameterField>("Magic");
+	absElemental->AddItem<ParameterField>("Fire");
+	absElemental->AddItem<ParameterField>("Lightning");
+	absElemental->AddItem<ParameterField>("Dark");
 
 	auto* resistances = new GroupPanel(GetContent(), "Resistances");
-	resistances->NewParamField("Bleed");
-	resistances->NewParamField("Poison");
-	resistances->NewParamField("Frost");
-	resistances->NewParamField("Curse");
+	resistances->AddItem<ParameterField>("Bleed");
+	resistances->AddItem<ParameterField>("Poison");
+	resistances->AddItem<ParameterField>("Frost");
+	resistances->AddItem<ParameterField>("Curse");
 
 	auto* misc = new GroupPanel(GetContent(), "Miscellaneous");
-	misc->NewParamField("Poise");
-	misc->NewParamField("Weight");
-	misc->NewParamField("Ratio");
+	misc->AddItem<ParameterField>("Poise");
+	misc->AddItem<ParameterField>("Weight");
+	misc->AddItem<ParameterField>("Ratio");
 
 	sizer->Add(absPhysical, 1, wxEXPAND);
 	sizer->Add(absElemental, 1, wxEXPAND);

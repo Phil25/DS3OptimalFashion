@@ -7,17 +7,16 @@ ArmorFinder::ArmorFinder(wxWindow* parent) : TitlePanel(parent, wxSize(800, 200)
 	auto* sizer = new wxBoxSizer(wxHORIZONTAL);
 
 	auto* stats = new GroupPanel(GetContent(), "Build Stats");
-	stats->NewEditableParamField<wxSpinCtrlDouble>("Current Load");
-	stats->NewEditableParamField<wxSpinCtrlDouble>("Full Load");
-	stats->NewEditableParamField<wxSpinCtrlDouble>("Percentage")->SetValue(70.);
+	stats->AddItem<ParameterFieldEditable<wxSpinCtrlDouble>>("Current Load");
+	stats->AddItem<ParameterFieldEditable<wxSpinCtrlDouble>>("Full Load");
+	stats->AddItem<ParameterFieldEditable<wxSpinCtrlDouble>>("Percentage")->SetValue(70.);
 
 	auto* maximization = new GroupPanel(GetContent(), "Parameter to Maximize");
-	maximization->NewEditableParamField<ParameterChoiceList>("Maximize");
-	maximization->NewEditableParamField<wxSpinCtrlDouble>("Max Delta");
+	maximization->AddItem<ParameterFieldEditable<ParameterChoiceList>>("Maximize");
+	maximization->AddItem<ParameterFieldEditable<wxSpinCtrlDouble>>("Max Delta");
 
 	auto* constraints = new GroupPanel(GetContent(), "Minimal Parameter Constraints");
-	auto* listPanel = constraints->AddItem<ListPanel<ParameterConstraint>>();
-	listPanel->AddListItem()->SetParameter(12);
+	constraints->AddItem<ListPanel<ParameterConstraint>, false>()->AddListItem()->SetParameter(12);
 
 	sizer->Add(stats, 1, wxEXPAND);
 	sizer->Add(maximization, 1, wxEXPAND);

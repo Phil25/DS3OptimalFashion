@@ -1,6 +1,6 @@
 #pragma once
 
-#include <GroupPanel.h>
+#include <GroupPanel.hpp>
 
 class CurrentParameters final : public TitlePanel
 {

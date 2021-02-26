@@ -1,6 +1,6 @@
 #pragma once
 
-#include <GroupPanel.h>
+#include <GroupPanel.hpp>
 #include <ParameterChoiceList.h>
 #include <wx/spinctrl.h>
 

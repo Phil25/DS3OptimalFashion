@@ -29,7 +29,7 @@ public:
 		, value(new Control(this))
 	{
 		label->SetFont(wxFont(10, wxFONTFAMILY_SWISS, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD));
-		value->SetMaxSize(wxSize(70, 70));
+		value->SetMaxSize(wxSize(80, 80));
 
 		if constexpr (std::is_same_v<Control, wxSpinCtrlDouble>)
 		{
