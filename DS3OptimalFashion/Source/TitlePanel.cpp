@@ -13,7 +13,7 @@ TitlePanel::TitlePanel(wxWindow* parent, wxSize size, const char* titleText, int
 	auto* dummy = new wxPanel(this);
 
 	sizer->Add(title, 0, wxEXPAND | wxALL, 5);
-	sizer->Add(content, 14, wxEXPAND | wxALL, 5);
+	sizer->Add(content, 15, wxEXPAND | wxALL, 5);
 	sizer->Add(dummy, 1, wxEXPAND | wxALL, 5);
 
 	this->SetSizerAndFit(sizer);
