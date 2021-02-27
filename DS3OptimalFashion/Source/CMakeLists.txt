@@ -6,6 +6,8 @@ target_sources(DS3OptimalFashion
 		"ArmorFinder.h"
 		"ArmorPieceCard.cpp"
 		"ArmorPieceCard.h"
+		"ArmorPieceFilterPanel.cpp"
+		"ArmorPieceFilterPanel.h"
 		"ArmorSetPreviewPanel.cpp"
 		"ArmorSetPreviewPanel.h"
 		"CurrentParameters.cpp"

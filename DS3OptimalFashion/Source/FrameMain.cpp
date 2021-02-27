@@ -1,5 +1,6 @@
 ﻿#include "FrameMain.h"
 
+#include <ArmorPieceFilterPanel.h>
 #include <ArmorSetPreviewPanel.h>
 #include <CurrentParameters.h>
 #include <ArmorFinder.h>
@@ -10,8 +11,8 @@ FrameMain::FrameMain() : wxFrame(nullptr, wxID_ANY, "DS3OptimalFashion")
 	auto* sizerInterface = new wxBoxSizer(wxVERTICAL);
 	auto* sizerMain = new wxBoxSizer(wxHORIZONTAL);
 
-	auto* panelWhitelist = new TitlePanel(this, wxDefaultSize, "Whitelist");
-	auto* panelBlacklist = new TitlePanel(this, wxDefaultSize, "Blacklist");
+	auto* panelWhitelist = new ArmorPieceFilterPanel(this);
+	auto* panelBlacklist = new ArmorPieceFilterPanel(this, false);
 
 	sizerLists->Add(panelWhitelist, 1, wxEXPAND | wxRIGHT, 3);
 	sizerLists->Add(panelBlacklist, 1, wxEXPAND, 3);
