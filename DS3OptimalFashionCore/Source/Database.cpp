@@ -1,7 +1,15 @@
 #include "Database.h"
 
+#include <cassert>
+
 namespace optifa
 {
+	auto Database::GetType(const ArmorPiece::Type type) const -> const ArmorPiece::Vector&
+	{
+		assert(db.count(type) && "Armor data should be initalized");
+		return db.at(type);
+	}
+
 	auto Database::Fetch(const ArmorPiece::NameList& whitelist, const ArmorPiece::NameList& blacklist) const -> Groups
 	{
 		using T = ArmorPiece::Type;

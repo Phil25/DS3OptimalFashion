@@ -43,6 +43,7 @@ namespace optifa
 	public:
 		Database() = default;
 
+		auto GetType(const ArmorPiece::Type) const -> const ArmorPiece::Vector&;
 		auto Fetch(const ArmorPiece::NameList& whitelist={}, const ArmorPiece::NameList& blacklist={}) const -> Groups;
 
 	private:

@@ -2,6 +2,7 @@
 
 #include <Frames/FrameMain.h>
 #include <Utils/CardPurpose.hpp>
+#include <Database.h>
 #include <wx/wx.h>
 #include <map>
 #include <array>
@@ -31,12 +32,15 @@ class AppMain final : public wxApp
 	using ImageCachePtr = std::unique_ptr<ImageCache>;
 	ImageCachePtr imageCache;
 
+	const optifa::Database armorData;
+
 public:
 	AppMain() = default;
 
 	bool OnInit() override;
 
 	auto GetImageCache() const -> const ImageCachePtr&;
+	auto GetArmorData() const -> const optifa::Database&;
 };
 
 DECLARE_APP(AppMain)

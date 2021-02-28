@@ -62,3 +62,8 @@ auto AppMain::GetImageCache() const -> const ImageCachePtr&
 {
 	return imageCache;
 }
+
+auto AppMain::GetArmorData() const -> const optifa::Database&
+{
+	return armorData;
+}
