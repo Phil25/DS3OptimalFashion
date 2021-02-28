@@ -1,5 +1,7 @@
 #include "CurrentParameters.h"
 
+#include <Panels/Details/ParameterField.h>
+
 CurrentParameters::CurrentParameters(wxWindow* parent)
 	: TitlePanel(parent, wxSize(800, 200), "Selected Armor")
 {

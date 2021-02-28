@@ -1,7 +1,6 @@
 #pragma once
 
 #include <Panels/Details/TitlePanel.h>
-#include <array>
 
 class GroupPanel final : public TitlePanel
 {

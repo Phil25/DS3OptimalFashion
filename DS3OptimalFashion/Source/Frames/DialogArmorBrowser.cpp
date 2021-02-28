@@ -1,6 +1,6 @@
 ﻿#include "DialogArmorBrowser.h"
 
-#include <ArmorPieceCard.h>
+#include <Utils/ArmorPieceCard.h>
 #include <wx/srchctrl.h>
 
 namespace

@@ -1,9 +1,9 @@
 ﻿#include "FrameMain.h"
 
-#include <ArmorPieceFilterPanel.h>
-#include <ArmorSetPreviewPanel.h>
-#include <CurrentParameters.h>
-#include <ArmorFinder.h>
+#include <Panels/ArmorPieceFilterPanel.h>
+#include <Panels/ArmorSetPreviewPanel.h>
+#include <Panels/CurrentParameters.h>
+#include <Panels/ArmorFinder.h>
 
 FrameMain::FrameMain() : wxFrame(nullptr, wxID_ANY, "DS3OptimalFashion")
 {
