@@ -1,5 +1,7 @@
 #include "ArmorPieceFilterPanel.h"
+
 #include <ArmorPieceCard.h>
+#include <DialogArmorBrowser.h>
 
 namespace
 {
@@ -13,7 +15,7 @@ namespace
 			/*
 			for (int i = 0; i < 10; ++i)
 			{
-				auto* p = new ArmorPieceCard(this, true);
+				auto* p = new ArmorPieceCard<CardPurpose::Filter>(this);
 				p->SetPiece("Iron Dragonslayer Gauntlets");
 				p->SetMinSize(wxSize(130, 130));
 				grid->Add(p, 1, wxEXPAND);
@@ -33,6 +35,13 @@ ArmorPieceFilterPanel::ArmorPieceFilterPanel(wxWindow* parent, const bool isWhit
 	auto* sizer = new wxBoxSizer(wxVERTICAL);
 
 	auto* adder = new wxButton(GetContent(), wxID_ANY, wxT("Add Armor Piece"));
+	adder->Bind(wxEVT_BUTTON,
+		[&](wxCommandEvent&)
+		{ 
+			auto dialog = DialogArmorBrowser(this, this->isWhitelist);
+			dialog.ShowModal();
+		});
+
 	auto* grid = new FilteredArmorPieces(GetContent());
 
 	sizer->Add(adder, 0, wxALIGN_CENTER_HORIZONTAL | wxBOTTOM, 5);

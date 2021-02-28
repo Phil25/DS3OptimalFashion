@@ -1,38 +1,25 @@
 #pragma once
 
 #include <wx/wx.h>
+#include <CardPurpose.hpp>
 
-class ArmorPieceIcon final : public wxPanel
-{
-	wxImage image;
-	bool highlighted{false};
-	const bool miniature{false};
-	const wxImageResizeQuality resizeQuality{miniature ? wxIMAGE_QUALITY_BILINEAR : wxIMAGE_QUALITY_NORMAL};
+template <CardPurpose Purpose>
+class ArmorPieceIcon;
 
-public:
-	ArmorPieceIcon(wxWindow* parent, const bool miniature=false);
-
-	void SetIcon(const std::string& file);
-	void SetHighlight(const bool highlight=true);
-
-private:
-	void Render(wxDC& dc);
-};
-
+template <CardPurpose Purpose>
 class ArmorPieceCard final : public wxPanel
 {
 	wxBoxSizer* sizer{nullptr};
-	ArmorPieceIcon* icon{nullptr};
+	ArmorPieceIcon<Purpose>* icon{nullptr};
 	wxTextCtrl* label{nullptr};
-	const bool miniature{false};
 
 public:
-	ArmorPieceCard(wxWindow* parent, const bool miniatue=false);
+	ArmorPieceCard(wxWindow* parent);
 
 	void SetPiece(const std::string& name);
 
 private:
 	void OnStartHover(wxMouseEvent& event);
 	void OnExitHover(wxMouseEvent& event);
+	void OnClick(wxMouseEvent& event);
 };
-

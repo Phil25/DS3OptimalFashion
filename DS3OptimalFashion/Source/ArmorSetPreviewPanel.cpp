@@ -3,10 +3,10 @@
 ArmorSetPreviewPanel::ArmorSetPreviewPanel(wxWindow* parent)
 	: wxPanel(parent, wxID_ANY)
 	, sizer(new wxBoxSizer(wxVERTICAL))
-	, head(new ArmorPieceCard(this))
-	, chest(new ArmorPieceCard(this))
-	, hands(new ArmorPieceCard(this))
-	, legs(new ArmorPieceCard(this))
+	, head(new ArmorPieceCard<CardPurpose::Preview>(this))
+	, chest(new ArmorPieceCard<CardPurpose::Preview>(this))
+	, hands(new ArmorPieceCard<CardPurpose::Preview>(this))
+	, legs(new ArmorPieceCard<CardPurpose::Preview>(this))
 {
 	head->SetPiece("Iron Helm");
 	chest->SetPiece("Faraam Armor");

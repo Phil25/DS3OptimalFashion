@@ -11,7 +11,7 @@ FrameMain::FrameMain() : wxFrame(nullptr, wxID_ANY, "DS3OptimalFashion")
 	auto* sizerInterface = new wxBoxSizer(wxVERTICAL);
 	auto* sizerMain = new wxBoxSizer(wxHORIZONTAL);
 
-	auto* panelWhitelist = new ArmorPieceFilterPanel(this);
+	auto* panelWhitelist = new ArmorPieceFilterPanel(this, true);
 	auto* panelBlacklist = new ArmorPieceFilterPanel(this, false);
 
 	sizerLists->Add(panelWhitelist, 1, wxEXPAND | wxRIGHT, 3);
