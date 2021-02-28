@@ -4,8 +4,8 @@ target_sources(DS3OptimalFashionCore
 		"ArmorFinder.cpp"
 		"ArmorPiece.hpp"
 		"ArmorSet.hpp"
-		"Parser.cpp"
-		"Parser.h"
+		"Database.cpp"
+		"Database.h"
 		"Utils.hpp"
 )
 

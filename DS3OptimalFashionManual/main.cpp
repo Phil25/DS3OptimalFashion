@@ -50,7 +50,8 @@ int main()
 	const auto toMaximize = P::Physical;
 	const auto minDifference = 0.1F;
 
-	const auto sets = optifa::FindOptimal(availableLoad, toMaximize, minDifference);
+	const auto db = optifa::Database();
+	const auto sets = optifa::FindOptimal(db, availableLoad, toMaximize, minDifference);
 
 	int i = 0;
 	for (const auto& set : sets)

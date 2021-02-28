@@ -17,7 +17,6 @@ This is basically Dark Souls III armor finder at [soulsplanner.com](soulsplanner
 ## Thirdparty tools used
 * [soulsplanner.com](soulsplanner.com)'s armor section for armor parameter tables.
 * [Table Capture](https://chrome.google.com/webstore/detail/table-capture/iebpjdmgckacbodjpijphcplhebcmeop) Chrome extension to parse said tables.
-* [fast-cpp-csv-parser](https://github.com/ben-strasser/fast-cpp-csv-parser) to parse CSV files.
 
 ## Building
 This project uses the [Conan](https://docs.conan.io/en/latest/installation.html) package manager.
