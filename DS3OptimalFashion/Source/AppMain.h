@@ -1,7 +1,7 @@
 #pragma once
 
-#include <FrameMain.h>
-#include <CardPurpose.hpp>
+#include <Frames/FrameMain.h>
+#include <Utils/CardPurpose.hpp>
 #include <wx/wx.h>
 #include <map>
 #include <array>

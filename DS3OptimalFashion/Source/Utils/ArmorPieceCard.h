@@ -1,7 +1,7 @@
 #pragma once
 
 #include <wx/wx.h>
-#include <CardPurpose.hpp>
+#include <Utils/CardPurpose.hpp>
 
 template <CardPurpose Purpose>
 class ArmorPieceIcon;

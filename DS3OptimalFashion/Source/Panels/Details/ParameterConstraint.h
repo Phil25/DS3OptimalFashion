@@ -1,7 +1,7 @@
 #pragma once
 
-#include <ListPanel.hpp>
-#include <ParameterChoiceList.h>
+#include <Panels/Details/ListPanel.hpp>
+#include <Panels/Details/ParameterChoiceList.h>
 #include <wx/spinctrl.h>
 
 class ParameterConstraint final : public wxPanel

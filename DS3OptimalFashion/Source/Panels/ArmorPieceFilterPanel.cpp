@@ -1,7 +1,7 @@
 #include "ArmorPieceFilterPanel.h"
 
-#include <ArmorPieceCard.h>
-#include <DialogArmorBrowser.h>
+#include <Utils/ArmorPieceCard.h>
+#include <Frames/DialogArmorBrowser.h>
 
 namespace
 {

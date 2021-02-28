@@ -1,6 +1,6 @@
 #pragma once
 
-#include <ArmorPieceCard.h>
+#include <Utils/ArmorPieceCard.h>
 
 class ArmorSetPreviewPanel final : public wxPanel
 {

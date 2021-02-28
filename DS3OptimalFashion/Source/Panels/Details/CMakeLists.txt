@@ -1,0 +1,13 @@
+target_sources(DS3OptimalFashion
+	PRIVATE
+		"GroupPanel.hpp"
+		"ListPanel.hpp"
+		"ParameterChoiceList.cpp"
+		"ParameterChoiceList.h"
+		"ParameterConstraint.cpp"
+		"ParameterConstraint.h"
+		"ParameterField.cpp"
+		"ParameterField.h"
+		"TitlePanel.cpp"
+		"TitlePanel.h"
+)

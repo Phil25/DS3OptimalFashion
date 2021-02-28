@@ -1,6 +1,6 @@
 #pragma once
 
-#include <TitlePanel.h>
+#include <Panels/Details/TitlePanel.h>
 
 class ArmorPieceFilterPanel final : public TitlePanel
 {

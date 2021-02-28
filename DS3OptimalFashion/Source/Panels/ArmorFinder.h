@@ -1,7 +1,6 @@
 #pragma once
 
-#include <GroupPanel.hpp>
-#include <ParameterChoiceList.h>
+#include <Panels/Details/TitlePanel.h>
 #include <wx/spinctrl.h>
 
 class ArmorFinder final : public TitlePanel

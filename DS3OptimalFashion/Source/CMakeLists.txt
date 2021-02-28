@@ -2,31 +2,10 @@ target_sources(DS3OptimalFashion
 	PRIVATE
 		"AppMain.cpp"
 		"AppMain.h"
-		"ArmorFinder.cpp"
-		"ArmorFinder.h"
-		"ArmorPieceCard.cpp"
-		"ArmorPieceCard.h"
-		"ArmorPieceFilterPanel.cpp"
-		"ArmorPieceFilterPanel.h"
-		"ArmorSetPreviewPanel.cpp"
-		"ArmorSetPreviewPanel.h"
-		"CardPurpose.hpp"
-		"CurrentParameters.cpp"
-		"CurrentParameters.h"
-		"DialogArmorBrowser.cpp"
-		"DialogArmorBrowser.h"
-		"FrameMain.cpp"
-		"FrameMain.h"
-		"GroupPanel.hpp"
-		"ListPanel.hpp"
-		"ParameterChoiceList.cpp"
-		"ParameterChoiceList.h"
-		"ParameterConstraint.cpp"
-		"ParameterConstraint.h"
-		"ParameterField.cpp"
-		"ParameterField.h"
-		"TitlePanel.cpp"
-		"TitlePanel.h"
 )
 
 target_include_directories(DS3OptimalFashion PRIVATE ${CMAKE_CURRENT_LIST_DIR})
+
+add_subdirectory("Frames")
+add_subdirectory("Panels")
+add_subdirectory("Utils")

@@ -1,6 +1,8 @@
 #include "ArmorFinder.h"
 
-#include <ParameterConstraint.h>
+#include <Panels/Details/GroupPanel.hpp>
+#include <Panels/Details/ParameterConstraint.h>
+#include <Panels/Details/ParameterField.h>
 
 ArmorFinder::ArmorFinder(wxWindow* parent) : TitlePanel(parent, wxSize(800, 200), "Armor Finder")
 {
