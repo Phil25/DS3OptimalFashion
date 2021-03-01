@@ -2,28 +2,53 @@
 
 #include <Utils/ArmorPieceCard.h>
 #include <Frames/DialogArmorBrowser.h>
+#include <AppMain.h>
 
 namespace
 {
-	class FilteredArmorPieces final : public wxScrolledWindow
+	template <bool IsWhitelist>
+	class FilteredArmorPieces final : public wxScrolledWindow, public ListUpdateSubscriber
 	{
+		wxGridSizer* grid;
+
 	public:
-		FilteredArmorPieces(wxWindow* parent) : wxScrolledWindow(parent)
+		FilteredArmorPieces(wxWindow* parent)
+			: wxScrolledWindow(parent)
+			, grid(new wxGridSizer(3))
 		{
-			auto* grid = new wxGridSizer(3);
-
-			/*
-			for (int i = 0; i < 10; ++i)
-			{
-				auto* p = new ArmorPieceCard<CardPurpose::Filter>(this);
-				p->SetPiece("Iron Dragonslayer Gauntlets");
-				p->SetMinSize(wxSize(130, 130));
-				grid->Add(p, 1, wxEXPAND);
-			}
-			*/
-
 			this->SetScrollRate(5, 5);
 			this->SetSizerAndFit(grid);
+		}
+
+		void UpdateArmorPieces(const optifa::ArmorPiece::NameList& list)
+		{
+			grid->Clear(true);
+
+			for (const auto& name : list)
+			{
+				auto* p = new ArmorPieceCard<CardPurpose::Filter>(this);
+
+				p->SetArmorPiece(name);
+				p->SetMinSize(wxSize(130, 130));
+
+				grid->Add(p);
+			}
+
+			grid->Layout();
+			GetParent()->GetSizer()->Layout();
+		}
+
+	private:
+		void OnUpdateWhitelist(const optifa::ArmorPiece::NameList& whitelist) override
+		{
+			if constexpr (IsWhitelist)
+				UpdateArmorPieces(whitelist);
+		}
+
+		void OnUpdateBlacklist(const optifa::ArmorPiece::NameList& blacklist) override
+		{
+			if constexpr (!IsWhitelist)
+				UpdateArmorPieces(blacklist);
 		}
 	};
 }
@@ -35,17 +60,24 @@ ArmorPieceFilterPanel::ArmorPieceFilterPanel(wxWindow* parent, const bool isWhit
 	auto* sizer = new wxBoxSizer(wxVERTICAL);
 
 	auto* adder = new wxButton(GetContent(), wxID_ANY, wxT("Add Armor Piece"));
-	adder->Bind(wxEVT_BUTTON,
-		[&](wxCommandEvent&)
-		{ 
-			auto dialog = DialogArmorBrowser(this, this->isWhitelist);
-			dialog.ShowModal();
-		});
-
-	auto* grid = new FilteredArmorPieces(GetContent());
-
+	adder->Bind(wxEVT_BUTTON, &ArmorPieceFilterPanel::ShowModal, this);
 	sizer->Add(adder, 0, wxALIGN_CENTER_HORIZONTAL | wxBOTTOM, 5);
-	sizer->Add(grid, 1, wxEXPAND);
+
+	if (isWhitelist)
+	{
+		auto* grid = new FilteredArmorPieces<true>(GetContent());
+		sizer->Add(grid, 1, wxEXPAND);
+	}
+	else
+	{
+		auto* grid = new FilteredArmorPieces<false>(GetContent());
+		sizer->Add(grid, 1, wxEXPAND);
+	}
 
 	GetContent()->SetSizerAndFit(sizer);
+}
+
+void ArmorPieceFilterPanel::ShowModal(wxCommandEvent&)
+{
+	DialogArmorBrowser{this, isWhitelist}.ShowModal();
 }

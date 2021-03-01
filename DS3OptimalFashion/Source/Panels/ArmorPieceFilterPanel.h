@@ -8,4 +8,7 @@ class ArmorPieceFilterPanel final : public TitlePanel
 
 public:
 	ArmorPieceFilterPanel(wxWindow* parent, const bool isWhitelist=true);
+
+private:
+	void ShowModal(wxCommandEvent&);
 };

@@ -8,10 +8,10 @@ ArmorSetPreviewPanel::ArmorSetPreviewPanel(wxWindow* parent)
 	, hands(new ArmorPieceCard<CardPurpose::Preview>(this))
 	, legs(new ArmorPieceCard<CardPurpose::Preview>(this))
 {
-	head->SetPiece("Iron Helm");
-	chest->SetPiece("Faraam Armor");
-	hands->SetPiece("Ruin Sentinel Gauntlets");
-	legs->SetPiece("Exile Leggings");
+	head->SetArmorPiece("Iron Helm");
+	chest->SetArmorPiece("Faraam Armor");
+	hands->SetArmorPiece("Ruin Sentinel Gauntlets");
+	legs->SetArmorPiece("Exile Leggings");
 
 	sizer->Add(head, 1, wxEXPAND | wxBOTTOM | wxTOP, 10);
 	sizer->Add(chest, 1, wxEXPAND | wxBOTTOM | wxTOP, 10);

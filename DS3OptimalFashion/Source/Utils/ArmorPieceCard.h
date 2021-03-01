@@ -9,14 +9,16 @@ class ArmorPieceIcon;
 template <CardPurpose Purpose>
 class ArmorPieceCard final : public wxPanel
 {
+	std::string name{"Naked Chest"};
+
 	wxBoxSizer* sizer{nullptr};
 	ArmorPieceIcon<Purpose>* icon{nullptr};
 	wxTextCtrl* label{nullptr};
 
 public:
 	ArmorPieceCard(wxWindow* parent);
-
-	void SetPiece(const std::string& name);
+	void SetArmorPiece(std::string name);
+	auto GetArmorPiece() const -> const std::string&;
 
 private:
 	void OnStartHover(wxMouseEvent& event);

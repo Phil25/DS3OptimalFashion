@@ -8,26 +8,31 @@
 template <CardPurpose Purpose>
 class ArmorPieceIcon final : public wxPanel
 {
-	std::string name;
+	ArmorPieceCard<Purpose>* parent{nullptr};
 	bool highlighted{false}, marked{false};
 
 public:
-	ArmorPieceIcon(wxWindow* parent)
+	ArmorPieceIcon(ArmorPieceCard<Purpose>* parent)
 		: wxPanel(parent, wxID_ANY)
-		, name("Naked Chest")
+		, parent(parent)
 	{
 		Bind(wxEVT_PAINT, [&](wxPaintEvent&) { this->Render(wxPaintDC{this}); });
 
-		if constexpr (Purpose != CardPurpose::Browser)
+		if constexpr (Purpose != CardPurpose::Whitelist && Purpose != CardPurpose::Blacklist)
 		{
 			// armor browser cannot be resized, no need to bind that
 			Bind(wxEVT_SIZE, [&](wxSizeEvent& e) { this->Refresh(); });
 		}
 	}
 
-	void SetIcon(std::string file)
+	void SetIcon(const std::string& file)
 	{
-		name = std::move(file);
+		if constexpr (Purpose == CardPurpose::Whitelist)
+			marked = wxGetApp().IsWhitelisted(file);
+
+		else if constexpr (Purpose == CardPurpose::Blacklist)
+			marked = wxGetApp().IsBlacklisted(file);
+
 		Refresh();
 	}
 
@@ -60,16 +65,21 @@ private:
 				dc.DrawBitmap(wxGetApp().GetImageCache()->Selection(length, Purpose), 0, 0, false);
 		}
 
-		if constexpr (Purpose == CardPurpose::Browser)
+		if constexpr (Purpose == CardPurpose::Whitelist || Purpose == CardPurpose::Blacklist)
 		{
 			if (marked)
-				dc.DrawBitmap(wxGetApp().GetImageCache()->Mark(length, Purpose), 0, 0, false);
+			{
+				if constexpr (Purpose == CardPurpose::Whitelist)
+					dc.DrawBitmap(wxGetApp().GetImageCache()->Mark(length, Purpose), 0, 0, false);
+				else
+					dc.DrawBitmap(wxGetApp().GetImageCache()->MarkDark(length, Purpose), 0, 0, false);
+			}
 
 			else if (highlighted)
 				dc.DrawBitmap(wxGetApp().GetImageCache()->Selection(length, Purpose), 0, 0, false);
 		}
 
-		dc.DrawBitmap(wxGetApp().GetImageCache()->Get(name, length, Purpose), 0, 0, false);
+		dc.DrawBitmap(wxGetApp().GetImageCache()->Get(parent->GetArmorPiece(), length, Purpose), 0, 0, false);
 
 		if constexpr (Purpose == CardPurpose::Filter)
 		{
@@ -91,7 +101,7 @@ ArmorPieceCard<Purpose>::ArmorPieceCard(wxWindow* parent)
 	: wxPanel(parent, wxID_ANY)
 	, sizer(new wxBoxSizer(wxVERTICAL))
 	, icon(new ArmorPieceIcon<Purpose>(this))
-	, label(new wxTextCtrl(this, wxID_ANY, wxT("Naked"), wxDefaultPosition, wxDefaultSize, wxALIGN_CENTRE_HORIZONTAL | wxTE_READONLY | wxBORDER_NONE))
+	, label(new wxTextCtrl(this, wxID_ANY, name, wxDefaultPosition, wxDefaultSize, wxALIGN_CENTRE_HORIZONTAL | wxTE_READONLY | wxBORDER_NONE))
 {
 	icon->Bind(wxEVT_ENTER_WINDOW, &ArmorPieceCard::OnStartHover, this);
 	icon->Bind(wxEVT_LEAVE_WINDOW, &ArmorPieceCard::OnExitHover, this);
@@ -104,7 +114,7 @@ ArmorPieceCard<Purpose>::ArmorPieceCard(wxWindow* parent)
 	else if constexpr (Purpose == CardPurpose::Filter)
 		label->SetFont(wxFont(7, wxFONTFAMILY_SWISS, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD));
 
-	else if constexpr (Purpose == CardPurpose::Browser)
+	else if constexpr (Purpose == CardPurpose::Whitelist || Purpose == CardPurpose::Blacklist)
 		label->SetFont(wxFont(9, wxFONTFAMILY_SWISS, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_MEDIUM));
 
 	else static_assert(false, "Incorrect CardPurpose");
@@ -116,10 +126,17 @@ ArmorPieceCard<Purpose>::ArmorPieceCard(wxWindow* parent)
 }
 
 template <CardPurpose P>
-void ArmorPieceCard<P>::SetPiece(const std::string& name)
+void ArmorPieceCard<P>::SetArmorPiece(std::string name)
 {
 	label->SetValue(name);
 	icon->SetIcon(name);
+	this->name = std::move(name);
+}
+
+template<CardPurpose P>
+auto ArmorPieceCard<P>::GetArmorPiece() const -> const std::string&
+{
+	return name;
 }
 
 template <CardPurpose P>
@@ -135,15 +152,45 @@ void ArmorPieceCard<P>::OnExitHover(wxMouseEvent&)
 }
 
 template <CardPurpose P>
-void ArmorPieceCard<P>::OnClick(wxMouseEvent& event)
+void ArmorPieceCard<P>::OnClick(wxMouseEvent&)
 {
-	icon->SetMark(!icon->IsMarked());
+	const bool val = !icon->IsMarked();
+
+	if constexpr (P == CardPurpose::Preview)
+	{
+		// do nothing
+	}
+	else if constexpr (P == CardPurpose::Filter)
+	{
+		wxGetApp().RemoveFromWhitelist(name);
+		wxGetApp().RemoveFromBlacklist(name);
+	}
+	else if constexpr (P == CardPurpose::Whitelist)
+	{
+		if (val) wxGetApp().AddToWhitelist(name);
+		else wxGetApp().RemoveFromWhitelist(name);
+
+		icon->SetMark(val);
+	}
+	else if constexpr (P == CardPurpose::Blacklist)
+	{
+		if (val) wxGetApp().AddToBlacklist(name);
+		else wxGetApp().RemoveFromBlacklist(name);
+
+		icon->SetMark(val);
+	}
+	else
+	{
+		static_assert(false, "Not covering all CardPurpose in OnClick");
+	}
 }
 
 template class ArmorPieceCard<CardPurpose::Preview>;
 template class ArmorPieceCard<CardPurpose::Filter>;
-template class ArmorPieceCard<CardPurpose::Browser>;
+template class ArmorPieceCard<CardPurpose::Whitelist>;
+template class ArmorPieceCard<CardPurpose::Blacklist>;
 
 template class ArmorPieceIcon<CardPurpose::Preview>;
 template class ArmorPieceIcon<CardPurpose::Filter>;
-template class ArmorPieceIcon<CardPurpose::Browser>;
+template class ArmorPieceIcon<CardPurpose::Whitelist>;
+template class ArmorPieceIcon<CardPurpose::Blacklist>;
