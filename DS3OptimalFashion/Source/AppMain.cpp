@@ -29,28 +29,25 @@ auto AppMain::ImageCache::MarkDark(const int size, const CardPurpose purpose) ->
 
 auto AppMain::ImageCache::Get(const std::string& name, const int size, const CardPurpose purpose) -> const wxBitmap&
 {
-	auto it = cache.find(name);
-	if (it == cache.end())
+
+	auto& cache = cacheMap[name][static_cast<size_t>(purpose)];
+
+	if (!cache.loaded)
 	{
 		std::ostringstream oss;
 		oss << "./DS3OptimalFashion_Images/" << name << (purpose == CardPurpose::Preview ? ".png" : "_128.png");
 
-		auto data = ImageCache::ImageData{wxImage{oss.str(), wxBITMAP_TYPE_PNG}, {}};
-		const auto& [newIt, success] = cache.emplace(name, std::move(data));
-
-		assert(newIt != cache.end() && success && "Adding image failed");
-		it = newIt;
+		cache.image.LoadFile(oss.str(), wxBITMAP_TYPE_PNG);
+		cache.loaded = true;
 	}
 
-	auto& bitmap = it->second.bitmaps[static_cast<size_t>(purpose)];
-
-	if (bitmap.GetWidth() != size)
+	if (cache.bitmap.GetWidth() != size)
 	{
-		bitmap = wxBitmap{it->second.image.Scale(size, size, Convert(purpose))};
+		cache.bitmap = wxBitmap{cache.image.Scale(size, size, Convert(purpose))};
 	}
 
-	assert(bitmap.GetHeight() == size && "Images should be 1:1");
-	return bitmap;
+	assert(cache.bitmap.GetHeight() == size && "Images should be 1:1");
+	return cache.bitmap;
 }
 
 bool AppMain::OnInit()

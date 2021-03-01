@@ -15,13 +15,10 @@ class AppMain final : public wxApp
 
 	class ImageCache
 	{
-		struct ImageData
-		{
-			wxImage image;
-			std::array<wxBitmap, static_cast<size_t>(CardPurpose::Size)> bitmaps;
-		};
+		struct ImageData { bool loaded{false}; wxImage image; wxBitmap bitmap; };
+		using ImageDataArray = std::array<ImageData, static_cast<size_t>(CardPurpose::Size)>;
 
-		std::map<std::string, ImageData> cache;
+		std::map<std::string, ImageDataArray> cacheMap;
 
 	public:
 		ImageCache() = default;
