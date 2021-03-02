@@ -43,15 +43,8 @@ public:
 		this->SetSizerAndFit(sizer);
 	}
 
-	void SetValue(double val)
+	auto GetControl()
 	{
-		if constexpr (std::is_same_v<Control, wxSpinCtrlDouble>)
-		{
-			value->SetValue(val);
-		}
-		else
-		{
-			static_assert(false, "Invalid control for double");
-		}
+		return value;
 	}
 };

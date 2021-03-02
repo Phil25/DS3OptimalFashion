@@ -1,28 +1,78 @@
 #include "ArmorFinder.h"
 
+#include <AppMain.h>
 #include <Panels/Details/GroupPanel.hpp>
 #include <Panels/Details/ParameterConstraint.h>
 #include <Panels/Details/ParameterField.h>
 
 ArmorFinder::ArmorFinder(wxWindow* parent) : TitlePanel(parent, wxSize(800, 200), "Armor Finder")
 {
-	auto* sizer = new wxBoxSizer(wxHORIZONTAL);
+	using FloatEdit = ParameterFieldEditable<wxSpinCtrlDouble>;
+	using ParamEdit = ParameterFieldEditable<ParameterChoiceList>;
 
 	auto* stats = new GroupPanel(GetContent(), "Build Stats");
-	stats->AddItem<ParameterFieldEditable<wxSpinCtrlDouble>>("Current Load");
-	stats->AddItem<ParameterFieldEditable<wxSpinCtrlDouble>>("Full Load");
-	stats->AddItem<ParameterFieldEditable<wxSpinCtrlDouble>>("Percentage")->SetValue(70.);
+
+	auto* currentLoad = stats->AddItem<FloatEdit>("Current Load");
+	currentLoad->GetControl()->Bind(wxEVT_SPINCTRLDOUBLE, &ArmorFinder::CurrentLoadUpdate, this);
+
+	auto* fullLoad = stats->AddItem<FloatEdit>("Full Load");
+	fullLoad->GetControl()->Bind(wxEVT_SPINCTRLDOUBLE, &ArmorFinder::FullLoadUpdate, this);
+
+	auto* percentage = stats->AddItem<FloatEdit>("Percentage");
+	percentage->GetControl()->Bind(wxEVT_SPINCTRLDOUBLE, &ArmorFinder::PercentageUpdate, this);
+	percentage->GetControl()->SetValue(70.);
+	percentage->GetControl()->SetRange(0, 100);
 
 	auto* maximization = new GroupPanel(GetContent(), "Parameter to Maximize");
-	maximization->AddItem<ParameterFieldEditable<ParameterChoiceList>>("Maximize");
-	maximization->AddItem<ParameterFieldEditable<wxSpinCtrlDouble>>("Max Delta");
+
+	auto* maximize = maximization->AddItem<ParamEdit>("Maximize");
+	maximize->GetControl()->Bind(wxEVT_CHOICE, &ArmorFinder::MaximizeParamUpdate, this);
+	maximize->GetControl()->SetParameter(optifa::ArmorPiece::Param::Physical);
+
+	auto* maxDelta = maximization->AddItem<FloatEdit>("Max Delta");
+	maxDelta->GetControl()->Bind(wxEVT_SPINCTRLDOUBLE, &ArmorFinder::MaxDeltaUpdate, this);
 
 	auto* constraints = new GroupPanel(GetContent(), "Minimal Parameter Constraints");
-	constraints->AddItem<ListPanel<ParameterConstraint>, false>()->AddListItem()->SetParameter(12);
+	auto* defConstraint = constraints->AddItem<ListPanel<ParameterConstraint>, false>()->AddListItem();
+	defConstraint->SetParameter(optifa::ArmorPiece::Param::Poise);
 
+	auto* sizer = new wxBoxSizer(wxHORIZONTAL);
 	sizer->Add(stats, 1, wxEXPAND);
 	sizer->Add(maximization, 1, wxEXPAND);
 	sizer->Add(constraints, 1, wxEXPAND);
 
 	GetContent()->SetSizerAndFit(sizer);
+}
+
+void ArmorFinder::CurrentLoadUpdate(wxSpinDoubleEvent& e)
+{
+	auto val = static_cast<wxSpinCtrlDouble*>(e.GetEventObject())->GetValue();
+	assert(val >= 0 && "CurrentLoadUpdate: invalid value");
+	wxGetApp().GetParams().SetCurrentLoad(val);
+}
+
+void ArmorFinder::FullLoadUpdate(wxSpinDoubleEvent& e)
+{
+	auto val = static_cast<wxSpinCtrlDouble*>(e.GetEventObject())->GetValue();
+	assert(val >= 0 && "FullLoadUpdate: invalid value");
+	wxGetApp().GetParams().SetFullLoad(val);
+}
+
+void ArmorFinder::PercentageUpdate(wxSpinDoubleEvent& e)
+{
+	auto val = static_cast<wxSpinCtrlDouble*>(e.GetEventObject())->GetValue();
+	assert(0 <= val && val <= 100 && "PercentageUpdate: invalid value");
+	wxGetApp().GetParams().SetPercentage(val);
+}
+
+void ArmorFinder::MaximizeParamUpdate(wxCommandEvent& e)
+{
+	auto val = static_cast<ParameterChoiceList*>(e.GetEventObject())->GetParameter();
+	wxGetApp().GetParams().SetParameter(val);
+}
+
+void ArmorFinder::MaxDeltaUpdate(wxSpinDoubleEvent& e)
+{
+	auto val = static_cast<wxSpinCtrlDouble*>(e.GetEventObject())->GetValue();
+	wxGetApp().GetParams().SetDelta(val);
 }

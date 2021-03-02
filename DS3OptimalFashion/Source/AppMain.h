@@ -2,18 +2,15 @@
 
 #include <Frames/FrameMain.h>
 #include <Utils/CardPurpose.hpp>
+#include <Utils/ParameterBroker.h>
 #include <Database.h>
 #include <wx/wx.h>
 #include <map>
 #include <array>
 
-class ListUpdateSubscriber;
-
 class AppMain final : public wxApp
 {
-	FrameMain* frameMain{nullptr};
-
-	class ImageCache
+	class ImageCache final
 	{
 		struct ImageData { bool loaded{false}; wxImage image; wxBitmap bitmap; };
 		using ImageDataArray = std::array<ImageData, static_cast<size_t>(CardPurpose::Size)>;
@@ -32,9 +29,10 @@ class AppMain final : public wxApp
 	using ImageCachePtr = std::unique_ptr<ImageCache>;
 	ImageCachePtr imageCache;
 
+	FrameMain* frameMain{nullptr};
+
 	const optifa::Database armorData;
-	optifa::ArmorPiece::NameList whitelist, blacklist;
-	std::vector<ListUpdateSubscriber*> listUpdateSubs;
+	ParameterBroker parameterBroker;
 
 public:
 	AppMain() = default;
@@ -43,43 +41,7 @@ public:
 
 	auto GetImageCache() const -> const ImageCachePtr&;
 	auto GetArmorData() const -> const optifa::Database&;
-
-	void AddToWhitelist(std::string name);
-	void AddToBlacklist(std::string name);
-
-	void RemoveFromWhitelist(const std::string& name);
-	void RemoveFromBlacklist(const std::string& name);
-
-	bool IsWhitelisted(const std::string& name) const;
-	bool IsBlacklisted(const std::string& name) const;
-
-	void SubscribeToListChanges(ListUpdateSubscriber*);
-	void UnsubscribeFromListChanges(ListUpdateSubscriber*);
-
-private:
-	void BroadcastWhitelistUpdate() const;
-	void BroadcastBlacklistUpdate() const;
+	auto GetParams() -> ParameterBroker&;
 };
 
 DECLARE_APP(AppMain)
-
-class ListUpdateSubscriber
-{
-protected:
-	ListUpdateSubscriber()
-	{
-		// using smart pointers on wxwidgets objects can be problematic, so no weak_ptrs
-		wxGetApp().SubscribeToListChanges(this);
-	}
-
-	~ListUpdateSubscriber()
-	{
-		wxGetApp().UnsubscribeFromListChanges(this);
-	}
-
-private:
-	virtual void OnUpdateWhitelist(const optifa::ArmorPiece::NameList&) = 0;
-	virtual void OnUpdateBlacklist(const optifa::ArmorPiece::NameList&) = 0;
-
-	friend AppMain;
-};

@@ -28,10 +28,10 @@ public:
 	void SetIcon(const std::string& file)
 	{
 		if constexpr (Purpose == CardPurpose::Whitelist)
-			marked = wxGetApp().IsWhitelisted(file);
+			marked = wxGetApp().GetParams().IsWhitelisted(file);
 
 		else if constexpr (Purpose == CardPurpose::Blacklist)
-			marked = wxGetApp().IsBlacklisted(file);
+			marked = wxGetApp().GetParams().IsBlacklisted(file);
 
 		Refresh();
 	}
@@ -158,24 +158,24 @@ void ArmorPieceCard<P>::OnClick(wxMouseEvent&)
 
 	if constexpr (P == CardPurpose::Preview)
 	{
-		// do nothing
+		// do nothing yet
 	}
 	else if constexpr (P == CardPurpose::Filter)
 	{
-		wxGetApp().RemoveFromWhitelist(name);
-		wxGetApp().RemoveFromBlacklist(name);
+		wxGetApp().GetParams().RemoveFromWhitelist(name);
+		wxGetApp().GetParams().RemoveFromBlacklist(name);
 	}
 	else if constexpr (P == CardPurpose::Whitelist)
 	{
-		if (val) wxGetApp().AddToWhitelist(name);
-		else wxGetApp().RemoveFromWhitelist(name);
+		if (val) wxGetApp().GetParams().AddToWhitelist(name);
+		else wxGetApp().GetParams().RemoveFromWhitelist(name);
 
 		icon->SetMark(val);
 	}
 	else if constexpr (P == CardPurpose::Blacklist)
 	{
-		if (val) wxGetApp().AddToBlacklist(name);
-		else wxGetApp().RemoveFromBlacklist(name);
+		if (val) wxGetApp().GetParams().AddToBlacklist(name);
+		else wxGetApp().GetParams().RemoveFromBlacklist(name);
 
 		icon->SetMark(val);
 	}

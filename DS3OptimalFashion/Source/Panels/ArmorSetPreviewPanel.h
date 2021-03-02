@@ -4,7 +4,8 @@
 
 class ArmorSetPreviewPanel final : public wxPanel
 {
-	wxBoxSizer* sizer{nullptr};
+	class ArmorUpdater;
+	std::unique_ptr<ArmorUpdater> armorUpdater;
 
 	ArmorPieceCard<CardPurpose::Preview>* head{nullptr};
 	ArmorPieceCard<CardPurpose::Preview>* chest{nullptr};

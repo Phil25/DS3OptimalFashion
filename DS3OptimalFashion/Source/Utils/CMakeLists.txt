@@ -3,4 +3,6 @@ target_sources(DS3OptimalFashion
 		"ArmorPieceCard.cpp"
 		"ArmorPieceCard.h"
 		"CardPurpose.hpp"
+		"ParameterBroker.cpp"
+		"ParameterBroker.h"
 )

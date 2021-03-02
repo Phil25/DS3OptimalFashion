@@ -10,15 +10,18 @@ class ParameterConstraint final : public wxPanel
 
 	wxSpinCtrlDouble* value{nullptr};
 	ParameterChoiceList* choiceList{nullptr};
+	optifa::ArmorPiece::Param lastParam{optifa::ArmorPiece::Param::Physical};
 
 public:
 	ParameterConstraint(OwningListPanel* parent);
 
-	void SetParameter(int selection);  // TODO: make this the param enum from Core
-	auto GetParameter() -> int;  // TODO: make this the param enum from Core
+	void SetParameter(const optifa::ArmorPiece::Param);
+	auto GetParameter() -> optifa::ArmorPiece::Param;
 
 	auto GetParameterValue() -> float;
 
 private:
+	void ValueChange(wxCommandEvent&);
+	void ConstraintChange(wxCommandEvent&);
 	void Remove(wxCommandEvent&);
 };

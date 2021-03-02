@@ -7,7 +7,9 @@
 namespace
 {
 	template <bool IsWhitelist>
-	class FilteredArmorPieces final : public wxScrolledWindow, public ListUpdateSubscriber
+	class FilteredArmorPieces final
+		: public wxScrolledWindow
+		, public ParameterBroker::UpdateSubscriber
 	{
 		wxGridSizer* grid;
 
@@ -39,13 +41,13 @@ namespace
 		}
 
 	private:
-		void OnUpdateWhitelist(const optifa::ArmorPiece::NameList& whitelist) override
+		void OnWhitelistUpdate(const optifa::ArmorPiece::NameList& whitelist) override
 		{
 			if constexpr (IsWhitelist)
 				UpdateArmorPieces(whitelist);
 		}
 
-		void OnUpdateBlacklist(const optifa::ArmorPiece::NameList& blacklist) override
+		void OnBlacklistUpdate(const optifa::ArmorPiece::NameList& blacklist) override
 		{
 			if constexpr (!IsWhitelist)
 				UpdateArmorPieces(blacklist);
