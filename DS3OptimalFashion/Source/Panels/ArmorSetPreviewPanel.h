@@ -4,9 +4,6 @@
 
 class ArmorSetPreviewPanel final : public wxPanel
 {
-	class ArmorUpdater;
-	std::unique_ptr<ArmorUpdater> armorUpdater;
-
 	ArmorPieceCard<CardPurpose::Preview>* head{nullptr};
 	ArmorPieceCard<CardPurpose::Preview>* chest{nullptr};
 	ArmorPieceCard<CardPurpose::Preview>* hands{nullptr};
@@ -14,4 +11,9 @@ class ArmorSetPreviewPanel final : public wxPanel
 
 public:
 	ArmorSetPreviewPanel(wxWindow* parent);
+
+	void SetHead(std::string);
+	void SetChest(std::string);
+	void SetHands(std::string);
+	void SetLegs(std::string);
 };

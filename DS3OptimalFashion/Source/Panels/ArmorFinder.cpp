@@ -31,6 +31,7 @@ ArmorFinder::ArmorFinder(wxWindow* parent) : TitlePanel(parent, wxSize(800, 200)
 
 	auto* maxDelta = maximization->AddItem<FloatEdit>("Max Delta");
 	maxDelta->GetControl()->Bind(wxEVT_SPINCTRLDOUBLE, &ArmorFinder::MaxDeltaUpdate, this);
+	maxDelta->GetControl()->SetRange(0, 0.5);
 
 	auto* constraints = new GroupPanel(GetContent(), "Minimal Parameter Constraints");
 	auto* defConstraint = constraints->AddItem<ListPanel<ParameterConstraint>, false>()->AddListItem();
