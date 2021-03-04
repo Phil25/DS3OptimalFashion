@@ -7,6 +7,8 @@ namespace optifa
 {
 	struct ArmorSet final
 	{
+		using Vector = std::vector<ArmorSet>;
+
 		const ArmorPiece head, chest, hands, legs;
 
 		ArmorSet(ArmorPiece head, ArmorPiece chest, ArmorPiece hands, ArmorPiece legs) noexcept

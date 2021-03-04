@@ -29,7 +29,7 @@ namespace
 		// in case of params with diminishing returns, include the value modifiers stripped from CalculateDiminishing<false>
 		minDifference = SuffersFromDiminishingReturns(toMaximize) ? minDifference * 1'000'000 : minDifference;
 
-		std::vector<optifa::ArmorSet> sets;
+		optifa::ArmorSet::Vector sets;
 
 		for (const auto& he : head)
 		for (const auto& ch : chest)
@@ -61,7 +61,7 @@ namespace
 			next_set:;
 		}
 
-		std::vector<optifa::ArmorSet> topSets;
+		optifa::ArmorSet::Vector topSets;
 
 		for (const auto& set : sets)
 		{
@@ -77,7 +77,7 @@ namespace
 namespace optifa
 {
 	auto FindOptimal(const Database& db, const float availableLoad, const ArmorPiece::Param toMaximize, float minDifference,
-		const ArmorPiece::MinParams& minValues, ArmorPiece::NameList whitelist, ArmorPiece::NameList blacklist) -> std::vector<ArmorSet>
+		const ArmorPiece::MinParams& minValues, ArmorPiece::NameList whitelist, ArmorPiece::NameList blacklist) -> ArmorSet::Vector
 	{
 		if (minDifference < 0.F) minDifference = 0.F;
 

@@ -25,17 +25,16 @@ class ArmorSetSelectorPanel::ArmorUpdater final
 {
 	mutable std::mutex m;
 
-	ArmorSetSelectorPanel* selector;
+	ArmorSetSelectorPanel* selector{nullptr};
 	std::atomic<bool> scheduled{false};
 
 	float maxWeight{}, delta{};
 	optifa::ArmorPiece::Param toMaximize{};
 	optifa::ArmorPiece::MinParams constraints{};
-	optifa::ArmorPiece::NameList whitelist, blacklist;
+	optifa::ArmorPiece::NameList whitelist{}, blacklist{};
 
 public:
-	ArmorUpdater(ArmorSetSelectorPanel* selector)
-		: selector(selector)
+	ArmorUpdater(ArmorSetSelectorPanel* selector) : selector(selector)
 	{
 	}
 
@@ -99,13 +98,7 @@ private:
 	void UpdateArmor()
 	{
 		auto sets = optifa::FindOptimal(wxGetApp().GetArmorData(), maxWeight, toMaximize, delta, constraints, whitelist, blacklist);
-		if (sets.empty()) return;
-
-		auto& set = sets[0];
-		selector->preview->SetHead(set.head.name);
-		selector->preview->SetChest(set.chest.name);
-		selector->preview->SetHands(set.hands.name);
-		selector->preview->SetLegs(set.legs.name);
+		selector->SetSets(std::move(sets));
 	}
 };
 
@@ -116,4 +109,57 @@ ArmorSetSelectorPanel::ArmorSetSelectorPanel(wxWindow* parent, wxSize size, Armo
 	, paramsDisplay(paramsDisplay)
 {
 	armorUpdater->Start();
+}
+
+void ArmorSetSelectorPanel::SetSets(optifa::ArmorSet::Vector sets)
+{
+	this->sets = std::move(sets);
+	SetSelection(this->sets.empty() ? -1 : 0);
+}
+
+void ArmorSetSelectorPanel::SetSelection(const int setIndex)
+{
+	if (setIndex >= 0 && setIndex < sets.size())
+	{
+		preview->SetHead(sets[setIndex].head.name);
+		preview->SetChest(sets[setIndex].chest.name);
+		preview->SetHands(sets[setIndex].hands.name);
+		preview->SetLegs(sets[setIndex].legs.name);
+
+		UpdateParamsDisplay(setIndex);
+	}
+	else
+	{
+		preview->SetHead("Naked Head");
+		preview->SetChest("Naked Chest");
+		preview->SetHands("Naked Hands");
+		preview->SetLegs("Naked Legs");
+	}
+}
+
+void ArmorSetSelectorPanel::UpdateParamsDisplay(const int setIndex)
+{
+	using P = optifa::ArmorPiece::Param;
+
+	auto& set = sets[setIndex];
+
+	paramsDisplay->SetArmorSetParameter(P::Physical, set.Get<P::Physical>(), 3);
+	paramsDisplay->SetArmorSetParameter(P::Thrust, set.Get<P::Thrust>(), 3);
+	paramsDisplay->SetArmorSetParameter(P::Strike, set.Get<P::Strike>(), 3);
+	paramsDisplay->SetArmorSetParameter(P::Slash, set.Get<P::Slash>(), 3);
+	paramsDisplay->SetArmorSetParameter(P::Magic, set.Get<P::Magic>(), 3);
+	paramsDisplay->SetArmorSetParameter(P::Fire, set.Get<P::Fire>(), 3);
+	paramsDisplay->SetArmorSetParameter(P::Lightning, set.Get<P::Lightning>(), 3);
+	paramsDisplay->SetArmorSetParameter(P::Dark, set.Get<P::Dark>(), 3);
+	paramsDisplay->SetArmorSetParameter(P::Bleed, set.Get<P::Bleed>(), 0);
+	paramsDisplay->SetArmorSetParameter(P::Poison, set.Get<P::Poison>(), 0);
+	paramsDisplay->SetArmorSetParameter(P::Frost, set.Get<P::Frost>(), 0);
+	paramsDisplay->SetArmorSetParameter(P::Curse, set.Get<P::Curse>(), 0);
+
+	auto poise = set.Get<P::Poise>();
+	auto weight = set.Get<P::Weight>();
+
+	paramsDisplay->SetArmorSetParameter(P::Poise, poise, 2);
+	paramsDisplay->SetArmorSetParameter(P::Weight, weight, 1);
+	paramsDisplay->SetArmorSetRatio(poise / weight, 2);
 }

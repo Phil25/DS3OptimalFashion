@@ -12,6 +12,8 @@ class ParameterField final : public wxPanel
 
 public:
 	ParameterField(wxWindow* parent, const char* name);
+
+	void SetArmorSetParameter(const float val, int precision);
 };
 
 template <typename Control>
