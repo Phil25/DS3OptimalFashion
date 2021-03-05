@@ -1,20 +1,20 @@
-#include "CurrentParameters.h"
+#include "ParametersDisplayPanel.h"
 
 #include <Panels/Details/ParameterField.h>
 
-void CurrentParameters::FieldArray::Set(Param at, ParameterField* f)
+void ParametersDisplayPanel::FieldArray::Set(Param at, ParameterField* f)
 {
 	assert(at != Param::Size && "Invalid parameter");
 	arr[static_cast<size_t>(at)] = f;
 }
 
-auto CurrentParameters::FieldArray::Get(Param at) -> ParameterField*
+auto ParametersDisplayPanel::FieldArray::Get(Param at) -> ParameterField*
 {
 	assert(at != Param::Size && "Invalid parameter");
 	return arr[static_cast<size_t>(at)];
 }
 
-CurrentParameters::CurrentParameters(wxWindow* parent)
+ParametersDisplayPanel::ParametersDisplayPanel(wxWindow* parent)
 	: TitlePanel(parent, wxSize(800, 200), "Selected Armor")
 {
 	auto* sizer = new wxBoxSizer(wxHORIZONTAL);
@@ -50,13 +50,13 @@ CurrentParameters::CurrentParameters(wxWindow* parent)
 	GetContent()->SetSizerAndFit(sizer);
 }
 
-void CurrentParameters::SetArmorSetParameter(const Param param, const float value, const int precision)
+void ParametersDisplayPanel::SetArmorSetParameter(const Param param, const float value, const int precision)
 {
 	assert(param != Param::Size && "Invalid parameter");
 	fields.Get(param)->SetArmorSetParameter(value, precision);
 }
 
-void CurrentParameters::SetArmorSetRatio(const float value, const int precision)
+void ParametersDisplayPanel::SetArmorSetRatio(const float value, const int precision)
 {
 	ratio->SetArmorSetParameter(value, precision);
 }

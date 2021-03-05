@@ -8,8 +8,8 @@ target_sources(DS3OptimalFashion
 		"ArmorSetPreviewPanel.h"
 		"ArmorSetSelectorPanel.cpp"
 		"ArmorSetSelectorPanel.h"
-		"CurrentParameters.cpp"
-		"CurrentParameters.h"
+		"ParametersDisplayPanel.cpp"
+		"ParametersDisplayPanel.h"
 )
 
 add_subdirectory("Details")

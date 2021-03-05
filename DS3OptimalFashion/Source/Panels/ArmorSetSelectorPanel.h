@@ -3,7 +3,7 @@
 #include <ArmorSet.hpp>
 #include <wx/wx.h>
 #include <Panels/ArmorSetPreviewPanel.h>
-#include <Panels/CurrentParameters.h>
+#include <Panels/ParametersDisplayPanel.h>
 
 class ArmorSetSelectorPanel : public wxPanel
 {
@@ -11,7 +11,7 @@ class ArmorSetSelectorPanel : public wxPanel
 	std::unique_ptr<ArmorUpdater> armorUpdater;
 
 	ArmorSetPreviewPanel* preview{nullptr};
-	CurrentParameters* paramsDisplay{nullptr};
+	ParametersDisplayPanel* paramsDisplay{nullptr};
 
 	optifa::ArmorSet::Vector sets;
 
@@ -19,7 +19,7 @@ class ArmorSetSelectorPanel : public wxPanel
 	wxChoice* setChoice{nullptr};
 
 public:
-	ArmorSetSelectorPanel(wxWindow* parent, wxSize size, ArmorSetPreviewPanel* preview, CurrentParameters* paramsDisplay);
+	ArmorSetSelectorPanel(wxWindow* parent, wxSize size, ArmorSetPreviewPanel* preview, ParametersDisplayPanel* paramsDisplay);
 
 	void SetSets(optifa::ArmorSet::Vector sets);
 

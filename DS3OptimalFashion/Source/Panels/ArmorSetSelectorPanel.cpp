@@ -103,7 +103,7 @@ private:
 	}
 };
 
-ArmorSetSelectorPanel::ArmorSetSelectorPanel(wxWindow* parent, wxSize size, ArmorSetPreviewPanel* preview, CurrentParameters* paramsDisplay)
+ArmorSetSelectorPanel::ArmorSetSelectorPanel(wxWindow* parent, wxSize size, ArmorSetPreviewPanel* preview, ParametersDisplayPanel* paramsDisplay)
 	: wxPanel(parent, wxID_ANY, wxDefaultPosition, std::move(size))
 	, armorUpdater(std::make_unique<ArmorUpdater>(this))
 	, preview(preview)

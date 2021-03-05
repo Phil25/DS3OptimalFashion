@@ -4,7 +4,7 @@
 #include <Panels/Details/GroupPanel.hpp>
 #include <Panels/Details/ParameterField.h>
 
-class CurrentParameters final : public TitlePanel
+class ParametersDisplayPanel final : public TitlePanel
 {
 	using Param = optifa::ArmorPiece::Param;
 
@@ -21,7 +21,7 @@ class CurrentParameters final : public TitlePanel
 	ParameterField* ratio{nullptr};
 
 public:
-	CurrentParameters(wxWindow* parent);
+	ParametersDisplayPanel(wxWindow* parent);
 
 	void SetArmorSetParameter(const Param, const float value, const int precision);
 	void SetArmorSetRatio(const float value, const int precision);

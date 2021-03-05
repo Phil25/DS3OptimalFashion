@@ -17,13 +17,13 @@ FrameMain::FrameMain() : wxFrame(nullptr, wxID_ANY, "DS3OptimalFashion")
 	sizerLists->Add(panelBlacklist, 1, wxEXPAND, 3);
 
 	auto* panelPreview = new ArmorSetPreviewPanel(this);
-	auto* panelCurrentParams = new CurrentParameters(this);
-	auto* panelSetSelector = new ArmorSetSelectorPanel(this, wxSize(850, 50), panelPreview, panelCurrentParams);
+	auto* panelParamsDisplay = new ParametersDisplayPanel(this);
+	auto* panelSetSelector = new ArmorSetSelectorPanel(this, wxSize(850, 50), panelPreview, panelParamsDisplay);
 
 	auto* panelFinder = new ArmorFinder(this);
 
 	sizerInterface->Add(panelSetSelector, 0, wxEXPAND | wxBOTTOM, 3);
-	sizerInterface->Add(panelCurrentParams, 0, wxEXPAND | wxBOTTOM, 3);
+	sizerInterface->Add(panelParamsDisplay, 0, wxEXPAND | wxBOTTOM, 3);
 	sizerInterface->Add(panelFinder, 0, wxEXPAND | wxBOTTOM, 3);
 	sizerInterface->Add(sizerLists, 5, wxEXPAND);
 
