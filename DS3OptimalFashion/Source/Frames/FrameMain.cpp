@@ -2,7 +2,7 @@
 
 #include <Panels/ArmorSetSelectorPanel.h>
 #include <Panels/ArmorPieceFilterPanel.h>
-#include <Panels/ArmorFinder.h>
+#include <Panels/ArmorFinderPanel.h>
 
 FrameMain::FrameMain() : wxFrame(nullptr, wxID_ANY, "DS3OptimalFashion")
 {
@@ -20,7 +20,7 @@ FrameMain::FrameMain() : wxFrame(nullptr, wxID_ANY, "DS3OptimalFashion")
 	auto* panelParamsDisplay = new ParametersDisplayPanel(this);
 	auto* panelSetSelector = new ArmorSetSelectorPanel(this, wxSize(850, 50), panelPreview, panelParamsDisplay);
 
-	auto* panelFinder = new ArmorFinder(this);
+	auto* panelFinder = new ArmorFinderPanel(this);
 
 	sizerInterface->Add(panelSetSelector, 0, wxEXPAND | wxBOTTOM, 3);
 	sizerInterface->Add(panelParamsDisplay, 0, wxEXPAND | wxBOTTOM, 3);

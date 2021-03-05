@@ -1,7 +1,7 @@
 target_sources(DS3OptimalFashion
 	PRIVATE
-		"ArmorFinder.cpp"
-		"ArmorFinder.h"
+		"ArmorFinderPanel.cpp"
+		"ArmorFinderPanel.h"
 		"ArmorPieceFilterPanel.cpp"
 		"ArmorPieceFilterPanel.h"
 		"ArmorSetPreviewPanel.cpp"

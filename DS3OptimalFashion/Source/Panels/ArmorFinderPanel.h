@@ -3,10 +3,10 @@
 #include <Panels/Details/TitlePanel.h>
 #include <wx/spinctrl.h>
 
-class ArmorFinder final : public TitlePanel
+class ArmorFinderPanel final : public TitlePanel
 {
 public:
-	ArmorFinder(wxWindow* parent);
+	ArmorFinderPanel(wxWindow* parent);
 
 private:
 	void CurrentLoadUpdate(wxSpinDoubleEvent&);
