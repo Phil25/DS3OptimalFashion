@@ -9,7 +9,7 @@ class ParameterBroker final
 	using NameList = optifa::ArmorPiece::NameList;
 	using Constraints = std::map<Param, float>;
 
-	float currentLoad{}, fullLoad{}, maxWeight{}, percentage{}, delta{};
+	float currentLoad{}, fullLoad{}, maxWeight{}, percentage{70.F}, delta{};
 	Param toMaximize{};
 	Constraints constraints{};
 	NameList whitelist{}, blacklist{};
@@ -41,8 +41,8 @@ public:
 	void SetPercentage(const float percentage) noexcept;
 	void SetParameter(const Param toMaximize) noexcept;
 	void SetDelta(const float delta) noexcept;
-	void SetConstraint(const Param param, const float value);
-	void RemoveConstraint(const Param param);
+	void SetConstraint(const Param param, const float value, const bool silent=false);
+	void RemoveConstraint(const Param param, const bool silent=false);
 
 	void AddToWhitelist(std::string name);
 	void AddToBlacklist(std::string name);

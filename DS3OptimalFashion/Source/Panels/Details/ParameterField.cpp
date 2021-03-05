@@ -3,15 +3,6 @@
 #include <sstream>
 #include <iomanip>
 
-namespace
-{
-	inline float RoundToNAfterComma(const float val, int precision=3) noexcept
-	{
-		const int mult = 10 * precision;
-		return std::round(val * mult) / mult;
-	}
-}
-
 ParameterField::ParameterField(wxWindow* parent, const char* name)
 	: wxPanel(parent, wxID_ANY)
 	, sizer(new wxBoxSizer(wxHORIZONTAL))

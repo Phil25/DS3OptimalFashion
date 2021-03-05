@@ -14,9 +14,11 @@ ArmorFinder::ArmorFinder(wxWindow* parent) : TitlePanel(parent, wxSize(800, 200)
 
 	auto* currentLoad = stats->AddItem<FloatEdit>("Current Load");
 	currentLoad->GetControl()->Bind(wxEVT_SPINCTRLDOUBLE, &ArmorFinder::CurrentLoadUpdate, this);
+	currentLoad->GetControl()->SetRange(0, 500);
 
 	auto* fullLoad = stats->AddItem<FloatEdit>("Full Load");
 	fullLoad->GetControl()->Bind(wxEVT_SPINCTRLDOUBLE, &ArmorFinder::FullLoadUpdate, this);
+	fullLoad->GetControl()->SetRange(0, 500);
 
 	auto* percentage = stats->AddItem<FloatEdit>("Percentage");
 	percentage->GetControl()->Bind(wxEVT_SPINCTRLDOUBLE, &ArmorFinder::PercentageUpdate, this);
@@ -34,8 +36,9 @@ ArmorFinder::ArmorFinder(wxWindow* parent) : TitlePanel(parent, wxSize(800, 200)
 	maxDelta->GetControl()->SetRange(0, 0.5);
 
 	auto* constraints = new GroupPanel(GetContent(), "Minimal Parameter Constraints");
-	auto* defConstraint = constraints->AddItem<ListPanel<ParameterConstraint>, false>()->AddListItem();
-	defConstraint->SetParameter(optifa::ArmorPiece::Param::Poise);
+	auto* constraintList = constraints->AddItem<ListPanel<ParameterConstraint>, false>();
+	constraintList->AddListItem();
+	constraintList->SetLimit(static_cast<uint32_t>(optifa::ArmorPiece::Param::Weight)); // exclude weight
 
 	auto* sizer = new wxBoxSizer(wxHORIZONTAL);
 	sizer->Add(stats, 1, wxEXPAND);

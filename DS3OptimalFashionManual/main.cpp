@@ -25,23 +25,23 @@ inline void PrintArmorSet(const optifa::ArmorSet& set)
 {
 	std::cout << set.head.name << ", " << set.chest.name << ", " << set.hands.name << ", " << set.legs.name << cr;
 
-	std::cout << "Physical: " << set.Get<P::Physical>() << " (";
-	std::cout << "St: " << set.Get<P::Strike>() << ", ";
-	std::cout << "Sl: " << set.Get<P::Slash>() << ", ";
-	std::cout << "Th: " << set.Get<P::Thrust>() << ')' << cr;
+	std::cout << "Physical: " << set.Get(P::Physical) << " (";
+	std::cout << "St: " << set.Get(P::Strike) << ", ";
+	std::cout << "Sl: " << set.Get(P::Slash) << ", ";
+	std::cout << "Th: " << set.Get(P::Thrust) << ')' << cr;
 
-	std::cout << "Magic: " << set.Get<P::Magic>() << ", ";
-	std::cout << "Fire: " << set.Get<P::Fire>() << ", ";
-	std::cout << "Lightning: " << set.Get<P::Lightning>() << ", ";
-	std::cout << "Dark: " << set.Get<P::Dark>() << cr;
+	std::cout << "Magic: " << set.Get(P::Magic) << ", ";
+	std::cout << "Fire: " << set.Get(P::Fire) << ", ";
+	std::cout << "Lightning: " << set.Get(P::Lightning) << ", ";
+	std::cout << "Dark: " << set.Get(P::Dark) << cr;
 
-	std::cout << "Bleed: " << set.Get<P::Bleed>() << ", ";
-	std::cout << "Poison: " << set.Get<P::Poison>() << ", ";
-	std::cout << "Frost: " << set.Get<P::Frost>() << ", ";
-	std::cout << "Curse: " << set.Get<P::Curse>() << cr;
+	std::cout << "Bleed: " << set.Get(P::Bleed) << ", ";
+	std::cout << "Poison: " << set.Get(P::Poison) << ", ";
+	std::cout << "Frost: " << set.Get(P::Frost) << ", ";
+	std::cout << "Curse: " << set.Get(P::Curse) << cr;
 
-	std::cout << "Poise: " << set.Get<P::Poise>() << ", ";
-	std::cout << "Weight: " << set.Get<P::Weight>() << cr;
+	std::cout << "Poise: " << set.Get(P::Poise) << ", ";
+	std::cout << "Weight: " << set.Get(P::Weight) << cr;
 }
 
 int main()
@@ -57,7 +57,7 @@ int main()
 	for (const auto& set : sets)
 	{
 		std::cout << "===== Set #" << ++i << cr;
-		PrintArmorSet(set);
+		PrintArmorSet(*set);
 		std::cout << cr;
 	}
 

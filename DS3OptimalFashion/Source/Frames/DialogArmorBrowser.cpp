@@ -153,7 +153,7 @@ DialogArmorBrowser::DialogArmorBrowser(wxWindow* parent, const bool isWhitelist)
 	sizer->Add(text, 0, wxEXPAND | wxALL, 5);
 	sizer->Add(filters, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, 5);
 	sizer->Add(browser, 1, wxEXPAND | wxLEFT | wxRIGHT, 5);
-	sizer->Add(status, 0, wxEXPAND | wxALIGN_CENTER_HORIZONTAL | wxALL, 5);
+	sizer->Add(status, 0, wxEXPAND | wxALL, 5);
 	sizer->Add(CreateButtonSizer(wxCLOSE), 0, wxALIGN_RIGHT | wxALL, 5);
 
 	SetSizerAndFit(sizer);

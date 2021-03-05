@@ -15,12 +15,16 @@ class ArmorSetSelectorPanel : public wxPanel
 
 	optifa::ArmorSet::Vector sets;
 
+	wxStaticText* status{nullptr};
+	wxChoice* setChoice{nullptr};
+
 public:
 	ArmorSetSelectorPanel(wxWindow* parent, wxSize size, ArmorSetPreviewPanel* preview, CurrentParameters* paramsDisplay);
 
 	void SetSets(optifa::ArmorSet::Vector sets);
 
 private:
-	void SetSelection(const int setIndex);
-	void UpdateParamsDisplay(const int setIndex);
+	void SetSelection(wxCommandEvent&);
+	void SetSelection(const int index);
+	void UpdateParamsDisplay(const int index);
 };

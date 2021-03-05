@@ -64,20 +64,22 @@ void ParameterBroker::SetDelta(const float delta) noexcept
 	BroadcastParametersUpdate();
 }
 
-void ParameterBroker::SetConstraint(const Param param, const float value)
+void ParameterBroker::SetConstraint(const Param param, const float value, const bool silent)
 {
 	if (value > 0.F)
 	{
 		constraints[param] = value;
-		BroadcastConstraintsUpdate();
+		if (!silent)
+			BroadcastConstraintsUpdate();
 	}
-	else RemoveConstraint(param);
+	else RemoveConstraint(param, silent);
 }
 
-void ParameterBroker::RemoveConstraint(const Param param)
+void ParameterBroker::RemoveConstraint(const Param param, const bool silent)
 {
 	constraints.erase(param);
-	BroadcastConstraintsUpdate();
+	if (!silent)
+		BroadcastConstraintsUpdate();
 }
 
 void ParameterBroker::AddToWhitelist(std::string name)

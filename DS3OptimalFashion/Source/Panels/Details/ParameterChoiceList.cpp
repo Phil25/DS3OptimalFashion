@@ -1,6 +1,7 @@
 #include "ParameterChoiceList.h"
 
-ParameterChoiceList::ParameterChoiceList(wxWindow* parent) : wxChoice(parent, wxID_ANY)
+ParameterChoiceList::ParameterChoiceList(wxWindow* parent, const bool limitToUnconstrained)
+	: wxChoice(parent, wxID_ANY)
 {
 	Append("Physical");
 	Append("Strike");
@@ -19,7 +20,7 @@ ParameterChoiceList::ParameterChoiceList(wxWindow* parent) : wxChoice(parent, wx
 
 	Append("Poise");
 
-	assert(GetSize() != static_cast<int>(optifa::ArmorPiece::Param::Size) && "Not all parameters specified");
+	assert(GetCount() != static_cast<int>(optifa::ArmorPiece::Param::Size) && "Not all parameters specified");
 }
 
 void ParameterChoiceList::SetParameter(const optifa::ArmorPiece::Param param)

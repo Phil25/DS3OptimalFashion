@@ -7,6 +7,7 @@ class ListPanel final : public wxScrolledWindow
 {
 	wxBoxSizer* sizer{nullptr};
 	wxButton* adder{nullptr};
+	uint32_t limit{999};
 
 public:
 	ListPanel(wxWindow* parent)
@@ -24,6 +25,9 @@ public:
 
 	auto AddListItem() -> T*
 	{
+		if (GetListItemCount() >= limit)
+			return nullptr;
+
 		auto* item = new T(this);
 
 		sizer->Insert(sizer->GetItemCount() - 1, item, 1, wxALIGN_CENTER);
@@ -47,6 +51,21 @@ public:
 
 		this->SetSizerAndFit(sizer);
 		this->GetParent()->GetSizer()->Layout();
+	}
+
+	auto GetListItemCount() const
+	{
+		return sizer->GetItemCount() - 1; // button at the end
+	}
+
+	auto GetItemAtIndex(size_t index) const
+	{
+		return static_cast<T*>(sizer->GetItem(index)->GetWindow());
+	}
+
+	void SetLimit(uint32_t limit)
+	{
+		this->limit = limit;
 	}
 
 private:

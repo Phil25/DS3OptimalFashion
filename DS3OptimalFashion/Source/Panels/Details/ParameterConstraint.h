@@ -10,7 +10,7 @@ class ParameterConstraint final : public wxPanel
 
 	wxSpinCtrlDouble* value{nullptr};
 	ParameterChoiceList* choiceList{nullptr};
-	optifa::ArmorPiece::Param lastParam{optifa::ArmorPiece::Param::Physical};
+	optifa::ArmorPiece::Param lastParam{optifa::ArmorPiece::Param::Poise};
 
 public:
 	ParameterConstraint(OwningListPanel* parent);
@@ -24,4 +24,8 @@ private:
 	void ValueChange(wxCommandEvent&);
 	void ConstraintChange(wxCommandEvent&);
 	void Remove(wxCommandEvent&);
+
+	auto FindConstraintWithParam(const optifa::ArmorPiece::Param) const -> ParameterConstraint*;
+	void SwapWithAnotherConstraint(ParameterConstraint* other);
+	auto FindUnconstrainedParameter() const -> optifa::ArmorPiece::Param;
 };

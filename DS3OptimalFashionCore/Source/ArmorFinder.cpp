@@ -2,8 +2,7 @@
 
 #include <Database.h>
 #include <cassert>
-
-constexpr char cr = '\n';
+#include <algorithm>
 
 namespace
 {
@@ -55,21 +54,24 @@ namespace
 			if (param >= bestParam - minDifference && CalculateAdditive(he, ch, ha, le, optifa::ArmorPiece::Param::Weight) <= availableLoad)
 			{
 				if (param > bestParam) bestParam = param;
-				sets.emplace_back(he, ch, ha, le);
+				sets.emplace_back(std::make_shared<optifa::ArmorSet>(he, ch, ha, le));
 			}
 
 			next_set:;
 		}
 
-		optifa::ArmorSet::Vector topSets;
+		const auto threshold = bestParam - minDifference;
 
-		for (const auto& set : sets)
-		{
-			if (calcParam(set.head, set.chest, set.hands, set.legs, toMaximize) >= bestParam - minDifference)
-				topSets.emplace_back(set);
-		}
+		sets.erase(
+			std::remove_if(
+				sets.begin(), sets.end(),
+				[&](const auto& set) { return calcParam(set->head, set->chest, set->hands, set->legs, toMaximize) < threshold; }),
+			sets.end());
 
-		return topSets;
+		std::sort(sets.begin(), sets.end(),
+			[&](const auto& s1, const auto& s2) { return s1->Get(toMaximize) > s2->Get(toMaximize); });
+
+		return sets;
 	}
 #pragma warning(pop)
 }

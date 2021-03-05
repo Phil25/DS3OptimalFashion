@@ -2,12 +2,13 @@
 
 #include <ArmorPiece.hpp>
 #include <Utils.hpp>
+#include <memory>
 
 namespace optifa
 {
 	struct ArmorSet final
 	{
-		using Vector = std::vector<ArmorSet>;
+		using Vector = std::vector<std::shared_ptr<ArmorSet>>;
 
 		const ArmorPiece head, chest, hands, legs;
 
@@ -16,13 +17,12 @@ namespace optifa
 		{
 		}
 
-		template <ArmorPiece::Param Param>
-		inline float Get() const noexcept
+		inline float Get(const ArmorPiece::Param param) const noexcept
 		{
-			if constexpr (SuffersFromDiminishingReturns(Param))
-				return CalculateDiminishing(head, chest, hands, legs, Param);
+			if (SuffersFromDiminishingReturns(param))
+				return CalculateDiminishing(head, chest, hands, legs, param);
 			else
-				return CalculateAdditive(head, chest, hands, legs, Param);
+				return CalculateAdditive(head, chest, hands, legs, param);
 		}
 	};
 }
