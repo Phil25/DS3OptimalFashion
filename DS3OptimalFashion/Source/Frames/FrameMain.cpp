@@ -28,7 +28,7 @@ FrameMain::FrameMain() : wxFrame(nullptr, wxID_ANY, "DS3OptimalFashion")
 	sizerInterface->Add(sizerLists, 5, wxEXPAND);
 
 	sizerMain->Add(panelPreview, 1, wxEXPAND | wxLEFT | wxTOP | wxBOTTOM, 3);
-	sizerMain->Add(sizerInterface, 3, wxEXPAND | wxALL, 3);
+	sizerMain->Add(sizerInterface, 2, wxEXPAND | wxALL, 3);
 
 	this->SetSizerAndFit(sizerMain);
 }

@@ -16,12 +16,14 @@ class ArmorPieceCard final : public wxPanel
 	wxTextCtrl* label{nullptr};
 
 public:
-	ArmorPieceCard(wxWindow* parent);
+	ArmorPieceCard(wxWindow* parent, const bool flip=false);
 	void SetArmorPiece(std::string name);
 	auto GetArmorPiece() const -> const std::string&;
 
 private:
 	void OnStartHover(wxMouseEvent& event);
 	void OnExitHover(wxMouseEvent& event);
-	void OnClick(wxMouseEvent& event);
+	void OnLeftClick(wxMouseEvent& event);
+	void OnMiddleClick(wxMouseEvent& event);
+	void OnRightClick(wxMouseEvent& event);
 };

@@ -12,7 +12,13 @@ class AppMain final : public wxApp
 {
 	class ImageCache final
 	{
-		struct ImageData { bool loaded{false}; wxImage image; wxBitmap bitmap; };
+		struct ImageData
+		{
+			bool loaded{false};
+			wxImage image;
+			std::array<wxBitmap, 2> bitmaps;
+		};
+
 		using ImageDataArray = std::array<ImageData, static_cast<size_t>(CardPurpose::Size)>;
 
 		std::map<std::string, ImageDataArray> cacheMap;
@@ -23,7 +29,7 @@ class AppMain final : public wxApp
 		auto Selection(const int size, const CardPurpose purpose) -> const wxBitmap&;
 		auto Mark(const int size, const CardPurpose purpose) -> const wxBitmap&;
 		auto MarkDark(const int size, const CardPurpose purpose) -> const wxBitmap&;
-		auto Get(const std::string& name, const int size, const CardPurpose purpose) -> const wxBitmap&;
+		auto Get(const std::string& name, const int size, const CardPurpose purpose, const bool flip=false) -> const wxBitmap&;
 	};
 
 	using ImageCachePtr = std::unique_ptr<ImageCache>;

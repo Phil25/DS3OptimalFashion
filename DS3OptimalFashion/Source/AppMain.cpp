@@ -27,7 +27,7 @@ auto AppMain::ImageCache::MarkDark(const int size, const CardPurpose purpose) ->
 	return Get("SelectionMarkedDark", size, purpose);
 }
 
-auto AppMain::ImageCache::Get(const std::string& name, const int size, const CardPurpose purpose) -> const wxBitmap&
+auto AppMain::ImageCache::Get(const std::string& name, const int size, const CardPurpose purpose, const bool flip) -> const wxBitmap&
 {
 	auto& cache = cacheMap[name][static_cast<size_t>(purpose)];
 
@@ -40,13 +40,15 @@ auto AppMain::ImageCache::Get(const std::string& name, const int size, const Car
 		cache.loaded = true;
 	}
 
-	if (cache.bitmap.GetWidth() != size)
+	if (cache.bitmaps[flip].GetWidth() != size)
 	{
-		cache.bitmap = wxBitmap{cache.image.Scale(size, size, Convert(purpose))};
+		auto image = cache.image.Scale(size, size, Convert(purpose));
+		if (flip) image = image.Mirror();
+		cache.bitmaps[flip] = wxBitmap{std::move(image)};
 	}
 
-	assert(cache.bitmap.GetHeight() == size && "Images should be 1:1");
-	return cache.bitmap;
+	assert(cache.bitmaps[flip].GetHeight() == size && "Images should be 1:1");
+	return cache.bitmaps[flip];
 }
 
 bool AppMain::OnInit()

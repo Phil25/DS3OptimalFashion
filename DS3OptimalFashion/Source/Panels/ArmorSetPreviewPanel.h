@@ -7,6 +7,7 @@ class ArmorSetPreviewPanel final : public wxPanel
 	ArmorPieceCard<CardPurpose::Preview>* head{nullptr};
 	ArmorPieceCard<CardPurpose::Preview>* chest{nullptr};
 	ArmorPieceCard<CardPurpose::Preview>* hands{nullptr};
+	ArmorPieceCard<CardPurpose::Preview>* handsr{nullptr};
 	ArmorPieceCard<CardPurpose::Preview>* legs{nullptr};
 
 public:
