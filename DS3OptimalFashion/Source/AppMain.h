@@ -21,10 +21,11 @@ class AppMain final : public wxApp
 
 		using ImageDataArray = std::array<ImageData, static_cast<size_t>(CardPurpose::Size)>;
 
+		const wxString imagePath;
 		std::map<std::string, ImageDataArray> cacheMap;
 
 	public:
-		ImageCache() = default;
+		ImageCache(wxString imagePath);
 
 		auto Selection(const int size, const CardPurpose purpose) -> const wxBitmap&;
 		auto Mark(const int size, const CardPurpose purpose) -> const wxBitmap&;
