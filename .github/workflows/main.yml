@@ -34,7 +34,7 @@ jobs:
               pwd
           - name: "MacOS 10.15"
             os: macos-10.15
-            binary: "DS3OptimalFashion"
+            binary: "DS3OptimalFashion.app"
             suffix: "MacOS"
             setup-cmds: pwd
 
