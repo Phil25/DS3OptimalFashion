@@ -8,7 +8,7 @@ on:
         default: "Release"
         description: "Build type"
       release-tag:
-        description: "Release version (blank for no release)"
+        description: "Release version (ex. 1.0.0 or blank for no release)"
 
 jobs:
   build:
@@ -59,7 +59,7 @@ jobs:
         shell: bash
         run: |
           export PATH=$PATH:/home/runner/.local/bin
-          conan install . --build missing -s build_type="${{ github.event.inputs.build-type }}"
+          conan install . --build missing -s build_type="${{ github.event.inputs.build-type }}" -e APP_VERSION=${{ github.event.inputs.release-tag }}
 
       - name: Build Project
         shell: bash

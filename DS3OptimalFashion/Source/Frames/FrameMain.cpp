@@ -4,7 +4,7 @@
 #include <Panels/ArmorPieceFilterPanel.h>
 #include <Panels/ArmorFinderPanel.h>
 
-FrameMain::FrameMain() : wxFrame(nullptr, wxID_ANY, "DS3OptimalFashion")
+FrameMain::FrameMain(wxString title) : wxFrame(nullptr, wxID_ANY, std::move(title))
 {
 	auto* sizerLists = new wxBoxSizer(wxHORIZONTAL);
 	auto* sizerInterface = new wxBoxSizer(wxVERTICAL);

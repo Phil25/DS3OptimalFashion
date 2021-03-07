@@ -82,7 +82,10 @@ bool AppMain::OnInit()
 	wxInitAllImageHandlers();
 	imageCache = std::make_unique<ImageCache>(imagePath.GetPath());
 
-	frameMain = new FrameMain();
+	auto title = wxString("DS3OptimalFashion -- v");
+	title.Append(APP_VERSION);
+
+	frameMain = new FrameMain(std::move(title));
 	frameMain->Show();
 
 	return true;

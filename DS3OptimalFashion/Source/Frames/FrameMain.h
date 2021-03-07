@@ -5,5 +5,5 @@
 class FrameMain final : public wxFrame
 {
 public:
-	FrameMain();
+	FrameMain(wxString title);
 };
