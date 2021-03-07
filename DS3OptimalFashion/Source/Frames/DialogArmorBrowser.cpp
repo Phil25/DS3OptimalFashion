@@ -175,7 +175,7 @@ void DialogArmorBrowser::UpdateFilter(std::string filter, int flags)
 		return;
 	}
 
-	std::transform(filter.begin(), filter.end(), filter.begin(), std::toupper);
+	std::transform(filter.begin(), filter.end(), filter.begin(), ::toupper);
 
 	std::vector<std::string> vec;
 

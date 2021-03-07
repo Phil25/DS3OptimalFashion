@@ -58,6 +58,10 @@ auto AppMain::ImageCache::Get(const std::string& name, const int size, const Car
 	return cache.bitmaps[flip];
 }
 
+AppMain::AppMain()
+{
+}
+
 bool AppMain::OnInit()
 {
 	auto imagePath = wxFileName(wxStandardPaths::Get().GetExecutablePath());

@@ -44,7 +44,7 @@ public:
 		, parent(parent)
 		, flip(flip)
 	{
-		Bind(wxEVT_PAINT, [&](wxPaintEvent&) { this->Render(wxPaintDC{this}); });
+		Bind(wxEVT_PAINT, [&](wxPaintEvent&) { this->Render(); });
 
 		if constexpr (Purpose != CardPurpose::Whitelist && Purpose != CardPurpose::Blacklist)
 		{
@@ -82,8 +82,10 @@ public:
 	}
 
 private:
-	void Render(wxDC& dc)
+	void Render()
 	{
+		auto dc = wxPaintDC{this};
+
 		const auto size = dc.GetSize();
 		const int length = wxMin(size.GetWidth(), size.GetHeight());
 
@@ -148,8 +150,6 @@ ArmorPieceCard<Purpose>::ArmorPieceCard(wxWindow* parent, const bool flip)
 		else if constexpr (Purpose == CardPurpose::Whitelist || Purpose == CardPurpose::Blacklist)
 			label->SetFont(wxFont(9, wxFONTFAMILY_SWISS, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_MEDIUM));
 
-		else static_assert(false, "Incorrect CardPurpose");
-
 		sizer->Add(label, 1, wxEXPAND);
 	}
 
@@ -213,10 +213,6 @@ void ArmorPieceCard<P>::OnLeftClick(wxMouseEvent&)
 		else wxGetApp().GetParams().RemoveFromBlacklist(name);
 
 		icon->SetMark(val);
-	}
-	else
-	{
-		static_assert(false, "Not covering all CardPurpose in OnClick");
 	}
 }
 

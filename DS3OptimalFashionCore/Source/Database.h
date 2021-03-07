@@ -7,9 +7,10 @@ namespace optifa
 {
 	class Database final
 	{
-
+	public:
 		using Groups = std::map<ArmorPiece::Type, ArmorPiece::Vector>;
 
+	private:
 #pragma warning(push)
 #pragma warning(disable: 4305)  // disable truncation from double to _Ty
 		const Groups db{

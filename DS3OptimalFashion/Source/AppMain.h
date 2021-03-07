@@ -7,6 +7,7 @@
 #include <wx/wx.h>
 #include <map>
 #include <array>
+#include <memory>
 
 class AppMain final : public wxApp
 {
@@ -42,7 +43,7 @@ class AppMain final : public wxApp
 	ParameterBroker parameterBroker;
 
 public:
-	AppMain() = default;
+	AppMain();
 
 	bool OnInit() override;
 

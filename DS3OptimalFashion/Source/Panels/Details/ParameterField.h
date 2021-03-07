@@ -1,6 +1,7 @@
 #pragma once
 
 #include <wx/wx.h>
+#include <wx/spinctrl.h>
 
 // TODO: try to rework into a single, more generic class
 
