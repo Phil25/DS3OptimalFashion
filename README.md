@@ -4,6 +4,8 @@
 
 This is basically Dark Souls III armor finder at [soulsplanner.com](soulsplanner.com) with some additional functionality.
 
+![Showcase](https://user-images.githubusercontent.com/16500675/110253115-e50c4b00-7f88-11eb-8f84-8a495dcc9d69.mp4)
+
 ## Differences from soulsplanner.com
 * Preview armor icons.
 * Whitelist for items you want to have.
