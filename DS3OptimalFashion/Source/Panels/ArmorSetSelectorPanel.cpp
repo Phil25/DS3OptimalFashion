@@ -10,6 +10,32 @@
 
 namespace
 {
+	class SetsUpdateEvent;
+	wxDECLARE_EVENT(SETS_UPDATE_EVENT, SetsUpdateEvent);
+
+	class SetsUpdateEvent : public wxCommandEvent
+	{
+		optifa::ArmorSet::Vector sets;
+
+	public:
+		SetsUpdateEvent(wxEventType type=SETS_UPDATE_EVENT, int id=0)
+			: wxCommandEvent(type, id)
+		{
+		}
+
+		void SetSets(optifa::ArmorSet::Vector sets)
+		{
+			this->sets = std::move(sets);
+		}
+
+		auto ExtractSets() -> optifa::ArmorSet::Vector&&
+		{
+			return std::move(sets);
+		}
+	};
+
+	wxDEFINE_EVENT(SETS_UPDATE_EVENT, SetsUpdateEvent);
+
 	auto Convert(std::map<optifa::ArmorPiece::Param, float> constraints)
 	{
 		optifa::ArmorPiece::MinParams params;
@@ -88,7 +114,7 @@ private:
 		{
 			if (p->scheduled)
 			{
-				p->UpdateArmor();
+				p->UpdateArmor(p);
 				p->scheduled = false;
 			}
 
@@ -96,10 +122,14 @@ private:
 		}
 	}
 
-	void UpdateArmor()
+	void UpdateArmor(ArmorUpdater* p)
 	{
+		auto* handler = p->selector->GetEventHandler();
 		auto sets = optifa::FindOptimal(wxGetApp().GetArmorData(), maxWeight, toMaximize, delta, constraints, whitelist, blacklist);
-		selector->SetSets(std::move(sets));
+
+		auto* evt = new SetsUpdateEvent{};
+		evt->SetSets(std::move(sets));
+		wxQueueEvent(handler, evt);
 	}
 };
 
@@ -111,6 +141,13 @@ ArmorSetSelectorPanel::ArmorSetSelectorPanel(wxWindow* parent, wxSize size, Armo
 	, status(new wxStaticText(this, wxID_ANY, wxEmptyString))
 	, setChoice(new wxChoice(this, wxID_ANY))
 {
+	this->Bind(SETS_UPDATE_EVENT,
+		[&](SetsUpdateEvent& e)
+		{
+			auto sets = e.ExtractSets();
+			this->SetSets(std::move(sets));
+		});
+
 	armorUpdater->Start();
 
 	status->SetFont(wxFont(14, wxFONTFAMILY_SWISS, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL));
