@@ -22,8 +22,8 @@ This is basically Dark Souls III armor finder at [soulsplanner.com](soulsplanner
 
 ## Legal and thirdparty
 * Armor item names and images are properties of FromSoftware Inc.
-* [wxWidgets](www.wxwidgets.org) for cross-platform native GUI.
-* [soulsplanner.com](soulsplanner.com)'s armor section for armor parameter tables.
+* [wxWidgets](https://www.wxwidgets.org) for cross-platform native GUI.
+* [soulsplanner.com](https://soulsplanner.com)'s armor section for armor parameter tables.
 * [Table Capture](https://chrome.google.com/webstore/detail/table-capture/iebpjdmgckacbodjpijphcplhebcmeop) Chrome extension to parse said tables.
 
 ## Building
