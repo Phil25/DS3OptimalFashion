@@ -1,8 +1,10 @@
 if (WIN32)
 	add_executable(DS3OptimalFashion WIN32)
+elseif (APPLE)
+	add_executable(DS3OptimalFashion MACOSX_BUNDLE)
 else ()
 	add_executable(DS3OptimalFashion)
-endif (WIN32)
+endif ()
 
 set(REG_FILE ".*\.(c[pp]?|h[pp]?)")
 source_group("Source" REGULAR_EXPRESSION "${REG_FILE}")
