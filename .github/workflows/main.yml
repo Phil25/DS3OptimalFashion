@@ -32,11 +32,11 @@ jobs:
               sudo apt update -y
               sudo apt install -y libgtk2.0-dev libgl-dev
               pwd
-          - name: "MacOS 10.15"
-            os: macos-10.15
-            binary: "DS3OptimalFashion.app"
-            suffix: "MacOS"
-            setup-cmds: pwd
+#          - name: "MacOS 10.15"
+#            os: macos-10.15
+#            binary: "DS3OptimalFashion.app"
+#            suffix: "MacOS"
+#            setup-cmds: pwd
 
     steps:
       - name: Checkout

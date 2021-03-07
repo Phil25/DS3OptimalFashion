@@ -18,7 +18,7 @@ This is basically Dark Souls III armor finder at [soulsplanner.com](soulsplanner
     * Whitelist and blacklist any item.
 * Simple preview of the selected set which updates dynamically.
 * Easily whitelist and blacklist items with left/middle click.
-* Available on all systems.
+* Available on Windows and Linux.
 
 ## Legal and thirdparty
 * Armor item names and images are properties of FromSoftware Inc.
